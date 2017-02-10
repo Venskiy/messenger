@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 
+import Routes from '../config/routes';
 import Chat from './Chat';
 
 export default class Home extends Component {
@@ -8,17 +9,12 @@ export default class Home extends Component {
     super(props)
   }
 
-  handleGoToChat() {
-    this.props.navigator.push({
-      title: 'Chat',
-      component: Chat
-    });
-  }
-
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.link} onPress={this.handleGoToChat.bind(this)}>Go to the chat route</Text>
+        <Text style={styles.link} onPress={() => this.props.navigator.push(Routes.getChatRoute())}>
+          Go to the chat route
+        </Text>
       </View>
     );
   }

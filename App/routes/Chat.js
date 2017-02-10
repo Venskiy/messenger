@@ -1,19 +1,19 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 
+import Routes from '../config/routes';
+
 export default class Chat extends Component {
   constructor(props) {
     super(props)
   }
 
-  handleGoToHome() {
-    this.props.navigator.pop();
-  }
-
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.link} onPress={this.handleGoToHome.bind(this)}>Go to the home route</Text>
+        <Text style={styles.link} onPress={() => this.props.navigator.pop()}>
+          Go to the home route
+        </Text>
       </View>
     );
   }
