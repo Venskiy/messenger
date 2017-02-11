@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {StyleSheet, View, Text, NavigatorIOS} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, View, Text, NavigatorIOS } from 'react-native';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
