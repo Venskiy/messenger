@@ -48,11 +48,15 @@ class Home extends Component {
     }
   }
 
+  onChatOpen(chatId) {
+    this.props.navigator.push(Routes.getChatRoute());
+  }
+
   render() {
     return (
       <ListView
         dataSource={this.state.dataSource}
-        renderRow={(data) => <ChatRow {...data} />}
+        renderRow={(data) => <ChatRow {...data} onChatOpen={this.onChatOpen.bind(this)} />}
         renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
       />
       // <View style={styles.container}>

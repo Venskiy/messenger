@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,10 +14,10 @@ const styles = StyleSheet.create({
 });
 
 const Row = (props) => (
-  <View style={styles.container}>
+  <TouchableOpacity style={styles.container} onPress={() => props.onChatOpen(props.id)}>
     <Text style={styles.text}>{props.interlocutor_username}</Text>
     <Text style={styles.text}>{props.last_message}</Text>
-  </View>
+  </TouchableOpacity>
 );
 
 export default Row;
