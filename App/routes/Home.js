@@ -4,15 +4,20 @@ import {connect } from 'react-redux';
 
 import Routes from '../config/routes';
 import Chat from './Chat';
+import ChatRow from '../components/ChatRow';
 import * as types from '../actions/actionTypes';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    marginTop: 20,
   },
+  // container: {
+  //   flex: 1,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   backgroundColor: '#F5FCFF',
+  // },
   link: {
     fontSize: 20,
     textAlign: 'center',
@@ -42,7 +47,7 @@ class Home extends Component {
     return (
       <ListView
         dataSource={this.state.dataSource}
-        renderRow={(rowData) => <Text>{rowData.last_message}</Text>}
+        renderRow={(data) => <ChatRow {...data} />}
       />
       // <View style={styles.container}>
       //   <Text style={styles.link} onPress={() => this.props.navigator.push(Routes.getChatRoute())}>
