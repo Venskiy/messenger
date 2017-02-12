@@ -12,6 +12,11 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 20,
   },
+  separator: {
+    flex: 1,
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: '#8E8E8E',
+  },
   // container: {
   //   flex: 1,
   //   justifyContent: 'center',
@@ -48,6 +53,7 @@ class Home extends Component {
       <ListView
         dataSource={this.state.dataSource}
         renderRow={(data) => <ChatRow {...data} />}
+        renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
       />
       // <View style={styles.container}>
       //   <Text style={styles.link} onPress={() => this.props.navigator.push(Routes.getChatRoute())}>
