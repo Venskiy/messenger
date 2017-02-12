@@ -49,7 +49,7 @@ class Home extends Component {
   }
 
   onChatOpen(chatId) {
-    this.props.navigator.push(Routes.getChatRoute());
+    this.props.navigator.push(Routes.getChatRoute(chatId));
   }
 
   render() {
