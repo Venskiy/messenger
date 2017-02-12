@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 
 import * as reducers from './reducers';
+import * as types from './actions/actionTypes';
 import mySaga from './sagas';
 import Home from './routes/Home';
 import Chat from './routes/Chat';
@@ -14,6 +15,8 @@ const reducer = combineReducers(reducers);
 const store = createStore(reducer, applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(mySaga);
+
+store.dispatch({type: types.CHATS_FETCH_REQUESTED, payload: {}});
 
 export default class Index extends Component {
   render() {

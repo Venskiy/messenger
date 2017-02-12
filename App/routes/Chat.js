@@ -3,6 +3,20 @@ import {StyleSheet, View, Text} from 'react-native';
 
 import Routes from '../config/routes';
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  link: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+});
+
 export default class Chat extends Component {
   constructor(props) {
     super(props)
@@ -18,17 +32,3 @@ export default class Chat extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  link: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-});
