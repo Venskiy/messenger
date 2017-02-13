@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class Home extends Component {
+class HomeRoute extends Component {
   constructor(props) {
     super(props)
 
@@ -82,4 +82,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeRoute);

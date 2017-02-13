@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 
 import Routes from '../../config/routes';
 import * as types from '../../actions/actionTypes';
+import MessageRow from './MessageRow';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class Chat extends Component {
+class ChatRoute extends Component {
   constructor(props) {
     super(props)
 
@@ -27,8 +28,21 @@ class Chat extends Component {
   }
 
   render() {
-    console.log(this.props.messages);
-    return (
+    const chatMessages = this.props.messages[this.props.chatId];
+
+    return chatMessages ? (
+      <View style={{ flex: 1 }}>
+        <ScrollView
+          style={{ flex: 1, backgroundColor: 'white' }}
+          contentContainerStyle={{ alignItems: 'stretch' }}
+        >
+          <View style={{ height: 90 }} />
+          {chatMessages.map((msg, idx) => (
+            <MessageRow username={msg.sender_username} text={msg.text} key={idx} />
+          ))}
+        </ScrollView>
+      </View>
+    ) : (
       <View style={styles.container}>
         <Text style={styles.link} onPress={() => this.props.navigator.pop()}>
           Go to the home route
@@ -49,4 +63,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Chat);
+export default connect(mapStateToProps, mapDispatchToProps)(ChatRoute);
