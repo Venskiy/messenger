@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 2,
+    flex: 1,
     padding: 12,
     flexDirection: 'column',
   },
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 });
 
 const Row = (props) => (
-  <TouchableOpacity style={styles.container} onPress={() => props.onChatOpen(props.id)}>
+  <TouchableOpacity style={styles.container} onPress={() => props.openChat(props.id)}>
     <Text style={styles.text}>{props.interlocutor_username}</Text>
     <Text style={styles.text}>{props.last_message}</Text>
   </TouchableOpacity>

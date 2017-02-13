@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ListView, StyleSheet, View, Text } from 'react-native';
-import {connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 import Routes from '../config/routes';
 import Chat from './Chat';
@@ -48,7 +48,7 @@ class Home extends Component {
     }
   }
 
-  onChatOpen(chatId) {
+  openChat(chatId) {
     this.props.navigator.push(Routes.getChatRoute(chatId));
   }
 
@@ -56,7 +56,7 @@ class Home extends Component {
     return (
       <ListView
         dataSource={this.state.dataSource}
-        renderRow={(data) => <ChatRow {...data} onChatOpen={this.onChatOpen.bind(this)} />}
+        renderRow={(data) => <ChatRow {...data} openChat={this.openChat.bind(this)} />}
         renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
       />
       // <View style={styles.container}>
