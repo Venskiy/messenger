@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { connect } from 'react-redux';
 
-import Routes from '../config/routes';
-import * as types from '../actions/actionTypes';
+import Routes from '../../config/routes';
+import * as types from '../../actions/actionTypes';
 
 const styles = StyleSheet.create({
   container: {

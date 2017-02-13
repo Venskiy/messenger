@@ -15,7 +15,6 @@ export function messenger(state = initialState, action = {}) {
     case types.CHATS_FETCH_FAILED:
       return Object.assign({}, state, { chatsFetchFailedErrorMessage: action.errorMessage});
     case types.MESSAGES_FETCH_SUCCEEDED:
-      console.log(action.chatId);
       return Object.assign({}, state, {
         messages: Object.assign({}, state.messages, { [action.chatId]: action.messages })
       });
