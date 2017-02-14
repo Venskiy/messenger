@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, NavigatorIOS } from 'react-native';
 import { createStore, combineReducers, applyMiddleware } from 'redux';

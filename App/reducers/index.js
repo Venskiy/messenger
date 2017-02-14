@@ -2,7 +2,18 @@ import * as types from '../actions/actionTypes';
 import * as actions from '../actions/actions';
 
 const initialState = {
-  chats: [],
+  chats: [
+    {
+      id: 3,
+      interlocutor_id: 2,
+      interlocutor_username: 'Venskiy',
+      is_interlocutor_typing: false,
+      last_message: 'Hello',
+      last_message_is_read: true,
+      last_message_sender_id: 4,
+      last_message_timestamp: '2017-02-08T16:49:45.252364Z'
+    }
+  ],
   chatsFetchFailedErrorMessage: '',
   messages: {},
   messagedFetchFailedErrorMessage: ''

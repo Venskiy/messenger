@@ -48,7 +48,7 @@ class HomeRoute extends Component {
     }
   }
 
-  openChat(chatId) {
+  onSelectChat(chatId) {
     this.props.navigator.push(Routes.getChatRoute(chatId));
   }
 
@@ -56,7 +56,7 @@ class HomeRoute extends Component {
     return (
       <ListView
         dataSource={this.state.dataSource}
-        renderRow={(data) => <ChatRow {...data} openChat={this.openChat.bind(this)} />}
+        renderRow={(chat) => <ChatRow chat={chat} onSelectChat={this.onSelectChat.bind(this)} />}
         renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
       />
       // <View style={styles.container}>

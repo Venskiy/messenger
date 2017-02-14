@@ -1,5 +1,9 @@
+// @flow
+
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+
+import type { Chat } from '../../types.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -13,11 +17,16 @@ const styles = StyleSheet.create({
   }
 });
 
-const Row = (props) => (
-  <TouchableOpacity style={styles.container} onPress={() => props.openChat(props.id)}>
-    <Text style={styles.text}>{props.interlocutor_username}</Text>
-    <Text style={styles.text}>{props.last_message}</Text>
+type ChatRowProps = {
+  chat: Chat,
+  onSelectChat: (chatId: number | string) => void
+}
+
+const ChatRow = ({chat, onSelectChat}: ChatRowProps) => (
+  <TouchableOpacity style={styles.container} onPress={() => onSelectChat(chat.id)}>
+    <Text style={styles.text}>{chat.interlocutor_username}</Text>
+    <Text style={styles.text}>{chat.last_message}</Text>
   </TouchableOpacity>
 );
 
-export default Row;
+export default ChatRow;
