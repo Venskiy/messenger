@@ -53,8 +53,8 @@ class ChatRoute extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  messages: state.messenger.messages,
-  messagesFetchFailedErrorMessage: state.messenger.messagedFetchFailedErrorMessage
+  messages: state.chat.messages,
+  messagesFetchFailedErrorMessage: state.chat.messagedFetchFailedErrorMessage
 });
 
 const mapDispatchToProps = (dispatch) => ({

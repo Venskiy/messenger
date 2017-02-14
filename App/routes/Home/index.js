@@ -72,8 +72,8 @@ class HomeRoute extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  chats: state.messenger.chats,
-  chatsFetchFailedErrorMessage: state.messenger.chatsFetchFailedErrorMessage
+  chats: state.home.chats,
+  chatsFetchFailedErrorMessage: state.home.chatsFetchFailedErrorMessage
 });
 
 const mapDispatchToProps = (dispatch) => ({
