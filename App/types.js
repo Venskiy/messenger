@@ -1,5 +1,10 @@
 // @flow
 
+export type User = {
+  id: number | string,
+  username: string
+}
+
 export type ChatType = {
   id: number | string,
   interlocutor_id: number | string,

@@ -2,15 +2,16 @@ import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 
 import { api } from '../services';
 import * as types from '../actions/actionTypes';
+import { putAuthenticatedUser, setAuthenticatedUserFetchErrorMessage } from '../actions/mainActions';
 import { putChats, setChatsFetchFailedErrorMessage } from '../actions/homeActions';
 import { putChatMessages, setMessagesFetchFailedErrorMessage } from '../actions/chatActions';
 
 function* getAuthenticatedUser(action) {
   try {
     const user = yield call(api.getAuthenticatedUser);
-    console.log(user);
+    yield put(putAuthenticatedUser(user));
   } catch (e) {
-    console.log(e);
+    yield put(setAuthenticatedUserFetchErrorMessage(e));
   }
 }
 

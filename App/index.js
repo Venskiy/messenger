@@ -8,6 +8,7 @@ import createSagaMiddleware from 'redux-saga';
 
 import { homeReducer } from './reducers/homeReducer';
 import { chatReducer } from './reducers/chatReducer';
+import { mainReducer } from './reducers/mainReducer';
 import { fetchChats } from './actions/homeActions';
 import { getAuthenticatedUser } from './actions/mainActions';
 import mySaga from './sagas';
@@ -15,7 +16,7 @@ import Home from './routes/Home';
 import Chat from './routes/Chat';
 
 const sagaMiddleware = createSagaMiddleware()
-const reducer = combineReducers({ home: homeReducer, chat: chatReducer });
+const reducer = combineReducers({ main: mainReducer, home: homeReducer, chat: chatReducer });
 const store = createStore(reducer, applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(mySaga);

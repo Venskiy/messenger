@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import MessageRow from './MessageRow';
 import Routes from '../../config/routes';
 import { fetchChatMessages } from '../../actions/chatActions';
-import type { Messages } from '../../types';
+import type { User, Messages } from '../../types';
 
 const styles = StyleSheet.create({
   container: {
@@ -27,6 +27,7 @@ class ChatRoute extends Component {
   props: {
     navigator: NavigatorIOS,
     chatId: number | string,
+    authenticatedUser: User,
     messages: Messages,
     messagesFetchFailedErrorMessage: string | Object,
     onFetchMessagesEvent: (chatId: number | string) => void,
@@ -64,6 +65,7 @@ class ChatRoute extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  authenticatedUser: state.main.authenticatedUser,
   messages: state.chat.messages,
   messagesFetchFailedErrorMessage: state.chat.messagedFetchFailedErrorMessage
 });
