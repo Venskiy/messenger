@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 import type { ChatType } from '../../types.js';
 

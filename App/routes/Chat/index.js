@@ -1,10 +1,11 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, ScrollView, NavigatorIOS } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, TextInput, NavigatorIOS } from 'react-native';
 import { connect } from 'react-redux';
 
 import MessageRow from './MessageRow';
+import Toolbar from './Toolbar';
 import Routes from '../../config/routes';
 import { fetchChatMessages } from '../../actions/chatActions';
 import type { User, Messages } from '../../types';
@@ -20,6 +21,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
+  },
+  input: {
+    flex: 1,
+    padding: 10,
+    height: 50,
+    fontSize: 16,
+    lineHeight: 24,
+    color: '#666',
   },
 });
 
@@ -58,6 +67,7 @@ class ChatRoute extends Component {
             />
           ))}
         </ScrollView>
+        <Toolbar />
       </View>
     ) : (
       <View style={styles.container}>

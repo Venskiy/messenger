@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { ListView, StyleSheet, View, Text, NavigatorIOS } from 'react-native';
+import { StyleSheet, ListView, View, Text, NavigatorIOS } from 'react-native';
 import { connect } from 'react-redux';
 
 import Chat from '../Chat';
@@ -62,7 +62,7 @@ class HomeRoute extends Component {
     }
   }
 
-  onSelectChat(chatId) {
+  selectChat(chatId) {
     this.props.navigator.push(Routes.getChatRoute(chatId));
   }
 
@@ -70,7 +70,7 @@ class HomeRoute extends Component {
     return (
       <ListView
         dataSource={this.state.dataSource}
-        renderRow={(chat) => <ChatRow chat={chat} onSelectChat={this.onSelectChat.bind(this)} />}
+        renderRow={(chat) => <ChatRow chat={chat} onSelectChat={this.selectChat.bind(this)} />}
         renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
       />
       // <View style={styles.container}>
