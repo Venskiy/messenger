@@ -5,6 +5,15 @@ import * as types from '../actions/actionTypes';
 import { putChats, setChatsFetchFailedErrorMessage } from '../actions/homeActions';
 import { putChatMessages, setMessagesFetchFailedErrorMessage } from '../actions/chatActions';
 
+function* getAuthenticatedUser(action) {
+  try {
+    const user = yield call(api.getAuthenticatedUser);
+    console.log(user);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 function* fetchChats(action) {
   try {
     const chats = yield call(api.fetchChats);
@@ -24,6 +33,7 @@ function* fetchMessages(action) {
 }
 
 function* mySaga() {
+  yield takeLatest(types.GET_AUTHENTICATED_USER, getAuthenticatedUser);
   yield takeLatest(types.CHATS_FETCH_REQUESTED, fetchChats);
   yield takeLatest(types.MESSAGES_FETCH_REQUESTED, fetchMessages);
 }

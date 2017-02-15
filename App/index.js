@@ -9,6 +9,7 @@ import createSagaMiddleware from 'redux-saga';
 import { homeReducer } from './reducers/homeReducer';
 import { chatReducer } from './reducers/chatReducer';
 import { fetchChats } from './actions/homeActions';
+import { getAuthenticatedUser } from './actions/mainActions';
 import mySaga from './sagas';
 import Home from './routes/Home';
 import Chat from './routes/Chat';
@@ -20,6 +21,7 @@ const store = createStore(reducer, applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(mySaga);
 
 store.dispatch(fetchChats());
+store.dispatch(getAuthenticatedUser());
 
 export default class Index extends Component {
   render() {
