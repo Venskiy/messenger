@@ -23,7 +23,11 @@ const styles = {
   },
 };
 
-const MessageBubble = ({ text }) => (
+type MessageBubbleProps = {
+  text: string
+}
+
+const MessageBubble = ({ text }: MessageBubbleProps) => (
   <View style={styles.textView}>
     <Text style={styles.text}>{text}</Text>
   </View>

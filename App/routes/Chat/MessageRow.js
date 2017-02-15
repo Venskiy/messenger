@@ -19,6 +19,11 @@ const styles = {
   },
 };
 
+type MessageRowProps = {
+  username: string,
+  text: string,
+}
+
 const MessageRow = ({ username, text }) => (
   <View style={styles.container}>
     <View username={username} style={{ ...styles.pad, marginRight: 10 }} />

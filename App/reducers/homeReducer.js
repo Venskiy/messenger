@@ -1,7 +1,10 @@
-import * as types from '../actions/actionTypes';
-import * as actions from '../actions/actions';
+// @flow
 
-const initialState = {
+import * as types from '../actions/actionTypes';
+import type { HomeAction } from '../actions/homeActions';
+import type { ChatType } from  '../types.js';
+
+const initialState: HomeState = {
   chats: [
     {
       id: 3,
@@ -15,15 +18,20 @@ const initialState = {
     }
   ],
   chatsFetchFailedErrorMessage: '',
-}
+};
 
-export default homeReducer = (state = initialState, action = {}) => {
+type HomeState = {
+  chats: Array<ChatType>,
+  chatsFetchFailedErrorMessage: string | Object
+};
+
+export const homeReducer = (state: HomeState = initialState, action: HomeAction = {}): HomeState => {
   switch (action.type) {
-    case types.CHATS_FETCH_SUCCEEDED:
-      return Object.assign({}, state, { chats: action.chats });
-    case types.CHATS_FETCH_FAILED:
-      return Object.assign({}, state, { chatsFetchFailedErrorMessage: action.errorMessage});
+    case types.PUT_CHATS:
+      return { ...state, chats: action.chats };
+    case types.SET_CHATS_FETCH_FAILED_ERROR_MESSAGE:
+      return { ...state, chatsFetchFailedErrorMessage: action.errorMessage }
     default:
       return state;
   }
-}
+};

@@ -2,26 +2,24 @@ import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 
 import { api } from '../services';
 import * as types from '../actions/actionTypes';
+import { putChats, setChatsFetchFailedErrorMessage } from '../actions/homeActions';
+import { putChatMessages, setMessagesFetchFailedErrorMessage } from '../actions/chatActions';
 
 function* fetchChats(action) {
   try {
     const chats = yield call(api.fetchChats);
-    yield put({type: types.CHATS_FETCH_SUCCEEDED, chats: chats});
+    yield put(putChats(chats));
   } catch (e) {
-    yield put({type: types.CHATS_FETCH_FAILED, errorMessage: e});
+    yield put(setChatsFetchFailedErrorMessage(e));
   }
 }
 
 function* fetchMessages(action) {
   try {
-    const response = yield call(api.fetchMessages, action.payload.chatId);
-    yield put({
-      type: types.MESSAGES_FETCH_SUCCEEDED,
-      messages: response.chat_messages,
-      chatId: action.payload.chatId
-    });
+    const response = yield call(api.fetchMessages, action.chatId);
+    yield put(putChatMessages(action.chatId, response.chat_messages));
   } catch (e) {
-    yield put({type: types.MESSAGES_FETCH_FAILED, errorMessage: e});
+    yield put(setMessagesFetchFailedErrorMessage(e));
   }
 }
 

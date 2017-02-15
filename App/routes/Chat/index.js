@@ -1,10 +1,13 @@
+// @flow
+
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, NavigatorIOS } from 'react-native';
 import { connect } from 'react-redux';
 
-import Routes from '../../config/routes';
-import * as types from '../../actions/actionTypes';
 import MessageRow from './MessageRow';
+import Routes from '../../config/routes';
+import { fetchChatMessages } from '../../actions/chatActions';
+import type { Messages } from '../../types';
 
 const styles = StyleSheet.create({
   container: {
@@ -21,6 +24,14 @@ const styles = StyleSheet.create({
 });
 
 class ChatRoute extends Component {
+  props: {
+    navigator: NavigatorIOS,
+    chatId: number | string,
+    messages: Messages,
+    messagesFetchFailedErrorMessage: string | Object,
+    onFetchMessagesEvent: (chatId: number | string) => void,
+  }
+
   constructor(props) {
     super(props)
 
@@ -57,10 +68,8 @@ const mapStateToProps = (state) => ({
   messagesFetchFailedErrorMessage: state.chat.messagedFetchFailedErrorMessage
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  onFetchMessagesEvent(chatId) {
-    dispatch({type: types.MESSAGES_FETCH_REQUESTED, payload: {chatId}});
-  }
-});
+const mapDispatchToProps = {
+  onFetchMessagesEvent: fetchChatMessages
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatRoute);

@@ -3,7 +3,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-import type { Chat } from '../../types.js';
+import type { ChatType } from '../../types.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 });
 
 type ChatRowProps = {
-  chat: Chat,
+  chat: ChatType,
   onSelectChat: (chatId: number | string) => void
 }
 

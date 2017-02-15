@@ -1,11 +1,14 @@
+// @flow
+
 import React, { Component } from 'react';
-import { ListView, StyleSheet, View, Text } from 'react-native';
+import { ListView, StyleSheet, View, Text, NavigatorIOS } from 'react-native';
 import { connect } from 'react-redux';
 
-import Routes from '../../config/routes';
 import Chat from '../Chat';
 import ChatRow from './ChatRow';
-import * as types from '../../actions/actionTypes';
+import Routes from '../../config/routes';
+import { fetchChats } from '../../actions/homeActions';
+import type { ChatType } from '../../types';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,6 +34,17 @@ const styles = StyleSheet.create({
 });
 
 class HomeRoute extends Component {
+  state: {
+    dataSource: ListView
+  }
+
+  props: {
+    navigator: NavigatorIOS,
+    chats: Array<ChatType>,
+    chatsFetchFailedErrorMessage: string | Object,
+    onFetchChatsButtonPressed: () => void
+  }
+
   constructor(props) {
     super(props)
 
@@ -76,10 +90,8 @@ const mapStateToProps = (state) => ({
   chatsFetchFailedErrorMessage: state.home.chatsFetchFailedErrorMessage
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  onFetchChatsButtonPressed() {
-    dispatch({type: types.CHATS_FETCH_REQUESTED, payload: {}});
-  },
-});
+const mapDispatchToProps = {
+  onFetchChatsButtonPressed: fetchChats,
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeRoute);

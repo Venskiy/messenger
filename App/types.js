@@ -1,6 +1,6 @@
 // @flow
 
-export type Chat = {
+export type ChatType = {
   id: number | string,
   interlocutor_id: number | string,
   interlocutor_username: string,
@@ -10,3 +10,12 @@ export type Chat = {
   last_message_sender_id: number | string,
   last_message_timestamp: string
 }
+
+export type Message = {
+  text: string,
+  sender_username: string,
+  timestamp: string,
+  is_read: boolean
+}
+
+export type Messages = { [key: number | string]: Array<Message> };

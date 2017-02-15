@@ -1,19 +1,25 @@
-import * as types from '../actions/actionTypes';
-import * as actions from '../actions/actions';
+// @flow
 
-const initialState = {
+import * as types from '../actions/actionTypes';
+import type { ChatAction } from '../actions/chatActions';
+import type { Messages, Message } from  '../types.js';
+
+const initialState: ChatState = {
   messages: {},
-  messagedFetchFailedErrorMessage: ''
+  messagesFetchFailedErrorMessage: ''
 }
 
-export default chatReducer = (state = initialState, action = {}) => {
+type ChatState = {
+  messages: { [key: string]: Messages },
+  messagesFetchFailedErrorMessage: string | Object
+}
+
+export const chatReducer = (state: ChatState = initialState, action: ChatAction | any = {}): ChatState => {
   switch (action.type) {
-    case types.MESSAGES_FETCH_SUCCEEDED:
-      return Object.assign({}, state, {
-        messages: Object.assign({}, state.messages, { [action.chatId]: action.messages })
-      });
-    case types.MESSAGES_FETCH_FAILED:
-      return Object.assign({}, state, { messagedFetchFailedErrorMessage: action.errorMessage});
+    case types.PUT_CHAT_MESSAGES:
+      return { ...state, messages: { ...state.messages, [action.chatId]: action.messages } };
+    case types.SET_MESSAGES_FETCH_FAILED_ERROR_MESSAGE:
+      return { ...state, messagesFetchFailedErrorMessage: action.errorMessage };
     default:
       return state;
   }
