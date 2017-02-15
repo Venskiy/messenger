@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import { Text, View } from 'react-native';
 
@@ -24,13 +26,22 @@ const styles = {
 };
 
 type MessageBubbleProps = {
+  isOwn: boolean,
   text: string
 }
 
-const MessageBubble = ({ text }: MessageBubbleProps) => (
-  <View style={styles.textView}>
-    <Text style={styles.text}>{text}</Text>
-  </View>
-);
+const MessageBubble = ({ isOwn, text }: MessageBubbleProps) => {
+  const viewStyle = {};
+  const textStyle = {}
+  if(isOwn) {
+    Object.assign(viewStyle, styles.ownTextView);
+    Object.assign(textStyle, styles.ownText);
+  }
+  return (
+    <View style={{ ...styles.textView, ...viewStyle }}>
+      <Text style={{ ...styles.text, ...textStyle }}>{text}</Text>
+    </View>
+  );
+}
 
 export default MessageBubble;

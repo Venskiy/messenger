@@ -50,7 +50,12 @@ class ChatRoute extends Component {
         >
           <View style={{ height: 90 }} />
           {chatMessages.map((msg, idx) => (
-            <MessageRow username={msg.sender_username} text={msg.text} key={idx} />
+            <MessageRow
+              username={msg.sender_username}
+              isOwn={this.props.authenticatedUser.username===msg.sender_username}
+              text={msg.text}
+              key={idx}
+            />
           ))}
         </ScrollView>
       </View>
