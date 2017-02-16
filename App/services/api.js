@@ -1,5 +1,4 @@
-const TOKEN = '7caf8056046d7e59d2a8a0c7874db6eb0fd2f0a2';
-const API_ROOT = 'http://127.0.0.1:8000/';
+import { TOKEN, API_ROOT } from '../config/settings';
 
 export const getAuthenticatedUser = () => {
   return new Promise((resolve, reject) => {
