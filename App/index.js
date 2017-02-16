@@ -2,29 +2,69 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, NavigatorIOS } from 'react-native';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import createSagaMiddleware from 'redux-saga';
+import { connect } from 'react-redux';
 
-import { homeReducer } from './reducers/homeReducer';
-import { chatReducer } from './reducers/chatReducer';
-import { mainReducer } from './reducers/mainReducer';
-import { fetchChats } from './actions/homeActions';
-import { getAuthenticatedUser } from './actions/mainActions';
-import mySaga from './sagas';
 import Home from './routes/Home';
 import Chat from './routes/Chat';
+import { fetchChats } from './actions/homeActions';
+import { recieveChatMessage } from './actions/chatActions';
+import type { User, Message, Messages } from './types';
+import { SOCKET_ROOT, TOKEN } from './config/settings';
 
-const sagaMiddleware = createSagaMiddleware()
-const reducer = combineReducers({ main: mainReducer, home: homeReducer, chat: chatReducer });
-const store = createStore(reducer, applyMiddleware(sagaMiddleware));
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
-sagaMiddleware.run(mySaga);
+class Index extends Component {
+  state: {
+    ws: WebSocket
+  }
 
-store.dispatch(fetchChats());
-store.dispatch(getAuthenticatedUser());
+  props: {
+    user: User,
+    messages: Messages,
+    onFetchChats: () => void,
+    onRecieveChatMessage: (chatId: number | string, message: Message) => void
+  }
 
-export default class Index extends Component {
+  constructor(props) {
+    super(props)
+    props.onFetchChats();
+
+    this.state = {
+      ws: new WebSocket(`${SOCKET_ROOT}chat_app/${props.user.id}/?user_token=${TOKEN}`)
+    };
+    this.state.ws.onmessage = function(e) {
+      const data = JSON.parse(e.data);
+      switch (data.type) {
+        case 'SEND_MESSAGE':
+          if(props.messages[data.chat_id]) {
+            props.onRecieveChatMessage(data.chat_id, data.message);
+          }
+          break;
+        default:
+          break;
+      }
+    };
+  }
+
+  componentWillUpdate(nextProps) {
+    this.state.ws.onmessage = function(e) {
+      const data = JSON.parse(e.data);
+      switch (data.type) {
+        case 'SEND_MESSAGE':
+          if(nextProps.messages[data.chat_id]) {
+            nextProps.onRecieveChatMessage(data.chat_id, data.message);
+          }
+          break;
+        default:
+          break;
+      }
+    };
+  }
+
   render() {
     let initialRoute = {
       title: 'Home',
@@ -32,19 +72,24 @@ export default class Index extends Component {
     }
 
     return (
-      <Provider store={store}>
-        <NavigatorIOS
-          navigationBarHidden={false}
-          style={styles.container}
-          tintColor='#FF6600'
-          initialRoute={initialRoute}/>
-      </Provider>
+      <NavigatorIOS
+        navigationBarHidden={false}
+        style={styles.container}
+        tintColor='#FF6600'
+        initialRoute={initialRoute}
+      />
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+const mapStateToProps = (state) => ({
+  user: state.main.authenticatedUser,
+  messages: state.chat.messages,
 });
+
+const mapDispatchToProps = {
+  onFetchChats: fetchChats,
+  onRecieveChatMessage: recieveChatMessage,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Index);

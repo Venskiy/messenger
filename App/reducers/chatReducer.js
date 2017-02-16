@@ -10,7 +10,7 @@ const initialState: ChatState = {
 }
 
 type ChatState = {
-  messages: { [key: string]: Messages },
+  messages: { [key: number | string]: Messages },
   messagesFetchFailedErrorMessage: string | Object
 }
 
@@ -20,6 +20,10 @@ export const chatReducer = (state: ChatState = initialState, action: ChatAction 
       return { ...state, messages: { ...state.messages, [action.chatId]: action.messages } };
     case types.SET_MESSAGES_FETCH_FAILED_ERROR_MESSAGE:
       return { ...state, messagesFetchFailedErrorMessage: action.errorMessage };
+    case types.RECIEVE_CHAT_MESSAGE:
+      return { ...state, messages: {
+        ...state.messages, [action.chatId]: state.messages[action.chatId].concat(action.message)
+      }};
     default:
       return state;
   }
