@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import Home from './routes/Home';
 import Chat from './routes/Chat';
-import { fetchChats } from './actions/homeActions';
+import { fetchChats, updateChatLastMessage } from './actions/homeActions';
 import { recieveChatMessage } from './actions/chatActions';
 import type { User, Message, Messages } from './types';
 import { SOCKET_ROOT, TOKEN } from './config/settings';
@@ -31,33 +31,21 @@ class Index extends Component {
 
   constructor(props) {
     super(props)
-    props.onFetchChats();
-
     this.state = {
       ws: new WebSocket(`${SOCKET_ROOT}chat_app/${props.user.id}/?user_token=${TOKEN}`)
     };
-    this.state.ws.onmessage = function(e) {
-      const data = JSON.parse(e.data);
-      switch (data.type) {
-        case 'SEND_MESSAGE':
-          if(props.messages[data.chat_id]) {
-            props.onRecieveChatMessage(data.chat_id, data.message);
-          }
-          break;
-        default:
-          break;
-      }
-    };
+    props.onFetchChats();
   }
 
   componentWillUpdate(nextProps) {
-    this.state.ws.onmessage = function(e) {
+    this.state.ws.onmessage = function(e: any) {
       const data = JSON.parse(e.data);
       switch (data.type) {
         case 'SEND_MESSAGE':
           if(nextProps.messages[data.chat_id]) {
             nextProps.onRecieveChatMessage(data.chat_id, data.message);
           }
+          nextProps.onUpdateChatLastMessage(data.chat_id, data.sender_id, data.message);
           break;
         default:
           break;
@@ -90,6 +78,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   onFetchChats: fetchChats,
   onRecieveChatMessage: recieveChatMessage,
+  onUpdateChatLastMessage: updateChatLastMessage,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index);

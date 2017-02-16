@@ -31,6 +31,17 @@ export const homeReducer = (state: HomeState = initialState, action: HomeAction 
       return { ...state, chats: action.chats };
     case types.SET_CHATS_FETCH_FAILED_ERROR_MESSAGE:
       return { ...state, chatsFetchFailedErrorMessage: action.errorMessage }
+    case types.UPDATE_CHAT_LAST_MESSAGE:
+      return {
+        ...state,
+        chats: state.chats.map(chat => parseInt(chat.id) === parseInt(action.chatId) ? {
+          ...chat,
+          last_message: action.message.text,
+          last_message_is_read: action.message.is_read,
+          last_message_sender_id: action.senderId,
+          last_message_timestamp: action.message.timestamp
+        } : chat)
+      };
     default:
       return state;
   }
