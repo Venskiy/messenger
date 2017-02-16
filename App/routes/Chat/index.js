@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import MessageRow from './MessageRow';
 import Toolbar from './Toolbar';
+import { SOCKET_ROOT, TOKEN } from '../../config/settings';
 import Routes from '../../config/routes';
 import { fetchChatMessages } from '../../actions/chatActions';
 import type { User, Messages } from '../../types';
@@ -33,6 +34,10 @@ const styles = StyleSheet.create({
 });
 
 class ChatRoute extends Component {
+  state: {
+    ws: WebSocket
+  }
+
   props: {
     navigator: NavigatorIOS,
     chatId: number | string,
@@ -44,6 +49,10 @@ class ChatRoute extends Component {
 
   constructor(props) {
     super(props)
+
+    this.state = {
+      ws: new WebSocket(`${SOCKET_ROOT}tornado_chat/${props.chatId}/?user_token=${TOKEN}`)
+    };
 
     props.onFetchMessagesEvent(props.chatId);
   }
