@@ -9,11 +9,11 @@ export const routes = {
       component: Home
     };
   },
-  getChatRoute(chatId) {
+  getChatRoute(chat) {
     return {
-      title: `Chat ${chatId}`,
+      title: chat.interlocutor_username,
       component: Chat,
-      passProps: { chatId: chatId }
+      passProps: { chat: chat }
     };
   }
 };

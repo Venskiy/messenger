@@ -21,12 +21,21 @@ const styles = StyleSheet.create({
   },
 });
 
-const Toolbar = () => (
+type ToolbarProps = {
+  text: string,
+  onChangeText: (text: string) => void,
+  onSendMessage: () => void,
+}
+
+const Toolbar = ({ text, onChangeText, onSendMessage }: ToolbarProps) => (
   <View style={styles.container}>
     <TextInput
       style={styles.input}
       selectionColor="rgba(0, 149, 255, 0.95)"
       placeholder="Write a message..."
+      value={text}
+      onChangeText={onChangeText}
+      onSubmitEditing={onSendMessage}
       blurOnSubmit={false}
       returnKeyType="send"
     />

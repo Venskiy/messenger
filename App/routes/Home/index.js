@@ -62,8 +62,8 @@ class HomeRoute extends Component {
     }
   }
 
-  selectChat(chatId) {
-    this.props.navigator.push(Routes.getChatRoute(chatId));
+  selectChat(chat) {
+    this.props.navigator.push(Routes.getChatRoute(chat));
   }
 
   render() {

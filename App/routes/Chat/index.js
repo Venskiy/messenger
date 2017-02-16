@@ -9,7 +9,7 @@ import Toolbar from './Toolbar';
 import { SOCKET_ROOT, TOKEN } from '../../config/settings';
 import Routes from '../../config/routes';
 import { fetchChatMessages } from '../../actions/chatActions';
-import type { User, Messages } from '../../types';
+import type { User, ChatType, Messages } from '../../types';
 
 const styles = StyleSheet.create({
   container: {
@@ -35,12 +35,13 @@ const styles = StyleSheet.create({
 
 class ChatRoute extends Component {
   state: {
-    ws: WebSocket
+    ws: WebSocket,
+    text: string
   }
 
   props: {
     navigator: NavigatorIOS,
-    chatId: number | string,
+    chat: ChatType,
     authenticatedUser: User,
     messages: Messages,
     messagesFetchFailedErrorMessage: string | Object,
@@ -51,15 +52,28 @@ class ChatRoute extends Component {
     super(props)
 
     this.state = {
-      ws: new WebSocket(`${SOCKET_ROOT}tornado_chat/${props.chatId}/?user_token=${TOKEN}`)
+      ws: new WebSocket(`${SOCKET_ROOT}tornado_chat/${props.chat.id}/?user_token=${TOKEN}`),
+      text: '',
     };
 
-    props.onFetchMessagesEvent(props.chatId);
+    props.onFetchMessagesEvent(props.chat.id);
+  }
+
+  sendMessage() {
+    if(this.state.text.replace(/\s+/g, '') !== '') {
+      const message = {
+        type: 'SEND_MESSAGE',
+        interlocutorId: this.props.chat.interlocutor_id,
+        message: this.state.text
+      }
+
+      this.state.ws.send(JSON.stringify(message));
+      this.setState({ text: '' });
+    }
   }
 
   render() {
-    const chatMessages = this.props.messages[this.props.chatId];
-
+    const chatMessages = this.props.messages[this.props.chat.id];
     return chatMessages ? (
       <View style={{ flex: 1 }}>
         <ScrollView
@@ -76,7 +90,11 @@ class ChatRoute extends Component {
             />
           ))}
         </ScrollView>
-        <Toolbar />
+        <Toolbar
+          text={this.state.text}
+          onChangeText={(text) => this.setState({ text })}
+          onSendMessage={this.sendMessage.bind(this)}
+        />
       </View>
     ) : (
       <View style={styles.container}>
