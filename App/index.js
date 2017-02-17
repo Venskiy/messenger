@@ -8,6 +8,7 @@ import Home from './routes/Home';
 import Chat from './routes/Chat';
 import { fetchChats, updateChatLastMessage } from './actions/homeActions';
 import { recieveChatMessage } from './actions/chatActions';
+import type { FullState } from './reducers/mainReducer';
 import type { User, Message, Messages } from './types';
 import { SOCKET_ROOT, TOKEN } from './config/settings';
 
@@ -37,7 +38,7 @@ class Index extends Component {
     props.onFetchChats();
   }
 
-  componentWillUpdate(nextProps) {
+  componentWillUpdate(nextProps: any) {
     this.state.ws.onmessage = function(e: any) {
       const data = JSON.parse(e.data);
       switch (data.type) {

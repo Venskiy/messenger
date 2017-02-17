@@ -2,15 +2,15 @@
 
 import * as types from '../actions/actionTypes';
 import type { ChatAction } from '../actions/chatActions';
-import type { Messages, Message } from  '../types.js';
+import type { Messages, Message } from  '../types';
 
 const initialState: ChatState = {
   messages: {},
   messagesFetchFailedErrorMessage: ''
 }
 
-type ChatState = {
-  messages: { [key: number | string]: Messages },
+export type ChatState = {
+  messages:  Messages,
   messagesFetchFailedErrorMessage: string | Object
 }
 

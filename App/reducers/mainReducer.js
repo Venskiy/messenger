@@ -2,7 +2,9 @@
 
 import * as types from '../actions/actionTypes';
 import type { MainAction } from '../actions/mainActions';
-import type { User } from  '../types.js';
+import type { User } from  '../types';
+import type { ChatState } from './chatReducer';
+import type { HomeState } from './homeReducer';
 
 const initialState: MainState = {
   authenticatedUser: { id: 4, username: 'Venskiy' },
@@ -13,6 +15,8 @@ type MainState = {
   authenticatedUser: User,
   authenticatedUserFetchFailedErrorMessage: string | Object
 }
+
+export type FullState = MainState | ChatState | HomeState;
 
 export const mainReducer = (state: MainState = initialState, action: MainAction | any = {}): MainState => {
   switch (action.type) {

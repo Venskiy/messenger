@@ -2,7 +2,7 @@
 
 import * as types from '../actions/actionTypes';
 import type { HomeAction } from '../actions/homeActions';
-import type { ChatType } from  '../types.js';
+import type { ChatType, Message } from  '../types';
 
 const initialState: HomeState = {
   chats: [
@@ -20,7 +20,7 @@ const initialState: HomeState = {
   chatsFetchFailedErrorMessage: '',
 };
 
-type HomeState = {
+export type HomeState = {
   chats: Array<ChatType>,
   chatsFetchFailedErrorMessage: string | Object
 };
@@ -30,7 +30,7 @@ export const homeReducer = (state: HomeState = initialState, action: HomeAction 
     case types.PUT_CHATS:
       return { ...state, chats: action.chats };
     case types.SET_CHATS_FETCH_FAILED_ERROR_MESSAGE:
-      return { ...state, chatsFetchFailedErrorMessage: action.errorMessage }
+      return { ...state, chatsFetchFailedErrorMessage: action.errorMessage };
     case types.UPDATE_CHAT_LAST_MESSAGE:
       return {
         ...state,
