@@ -14,10 +14,9 @@ type ChatsListProps = {
 
 const ChatsList = ({ chats, navigator }: ChatsListProps) => (
   <ScrollView
-    style={{ flex: 1, backgroundColor: 'white' }}
+    style={{ flex: 1, backgroundColor: '#fff', marginBottom: 50 }}
     contentContainerStyle={{ alignItems: 'stretch' }}
   >
-    <View style={{ height: 90 }} />
     {chats.map((chat, idx) => (
       <ChatRow
         chat={chat}

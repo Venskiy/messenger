@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'stretch',
   },
   separator: {
     flex: 1,
@@ -40,7 +40,7 @@ class HomeRoute extends Component {
     super(props)
 
     this.state = {
-      tab: 'users',
+      tab: 'chats',
     };
   }
 
@@ -49,12 +49,12 @@ class HomeRoute extends Component {
       <View style={styles.container}>
         <Tabs
           selected={this.state.tab}
-          style={{backgroundColor:'white'}}
-          selectedStyle={{color:'red'}}
+          style={{ backgroundColor: '#f7f7f7' }}
+          selectedStyle={{ color: '#007ee5' }}
           onSelect={el => this.setState({ tab: el.props.name })}
         >
-          <Text name="chats">Chats</Text>
-          <Text name="users">Users</Text>
+          <Text style={{ color: '#929292' }} name="chats">Chats</Text>
+          <Text style={{ color: '#929292' }} name="users">Users</Text>
         </Tabs>
         {this.state.tab === 'chats' ? (
           <ChatsList navigator={this.props.navigator} chats={this.props.chats} />

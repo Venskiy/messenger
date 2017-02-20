@@ -11,10 +11,9 @@ type UserListProps = {
 
 const UsersList = ({ users }: UsersListProps) => (
   <ScrollView
-    style={{ flex: 1, backgroundColor: 'white' }}
+    style={{ flex: 1, backgroundColor: '#fff', marginBottom: 50 }}
     contentContainerStyle={{ alignItems: 'stretch' }}
   >
-    <View style={{ height: 90 }} />
     {users.map((user, idx) => (
       <Text key={idx}>{user.username}</Text>
     ))}
