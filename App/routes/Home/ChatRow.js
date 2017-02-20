@@ -3,6 +3,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
+import Avatar from '../../components/Avatar';
 import type { ChatType } from '../../types.js';
 
 const styles = StyleSheet.create({
@@ -24,6 +25,7 @@ type ChatRowProps = {
 
 const ChatRow = ({ chat, onSelectChat }: ChatRowProps) => (
   <TouchableOpacity style={styles.container} onPress={() => onSelectChat(chat)}>
+    <Avatar username={chat.interlocutor_username} />
     <Text style={styles.text}>{chat.interlocutor_username}</Text>
     <Text style={styles.text}>{chat.last_message}</Text>
   </TouchableOpacity>

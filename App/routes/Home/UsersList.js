@@ -5,7 +5,7 @@ import { StyleSheet, View, Text, ScrollView } from 'react-native';
 
 import type { User } from '../../types.js';
 
-type UserListProps = {
+type UsersListProps = {
   users: Array<User>,
 }
 
