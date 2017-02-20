@@ -2,9 +2,11 @@
 
 import * as types from '../actions/actionTypes';
 import type { HomeAction } from '../actions/homeActions';
-import type { ChatType, Message } from  '../types';
+import type { User, ChatType, Message } from  '../types';
 
 const initialState: HomeState = {
+  users: [{ id: 4, username: 'Venskiy' }],
+  usersFetchFailedErrorMessage: '',
   chats: [
     {
       id: 3,
@@ -21,12 +23,18 @@ const initialState: HomeState = {
 };
 
 export type HomeState = {
+  users: Array<User>,
+  usersFetchFailedErrorMessage: string | Object,
   chats: Array<ChatType>,
-  chatsFetchFailedErrorMessage: string | Object
+  chatsFetchFailedErrorMessage: string | Object,
 };
 
 export const homeReducer = (state: HomeState = initialState, action: HomeAction = {}): HomeState => {
   switch (action.type) {
+    case types.PUT_USERS:
+      return { ...state, users: action.users };
+    case types.SET_USERS_FETCH_FAILED_ERROR_MESSAGE:
+      return { ...state, usersFetchFailedErrorMessage: action.errorMessage };
     case types.PUT_CHATS:
       return { ...state, chats: action.chats };
     case types.SET_CHATS_FETCH_FAILED_ERROR_MESSAGE:

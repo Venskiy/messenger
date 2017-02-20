@@ -6,7 +6,7 @@ import Tabs from 'react-native-tabs';
 import { connect } from 'react-redux';
 
 import ChatsList from './ChatsList';
-import { fetchChats } from '../../actions/homeActions';
+import { fetchUsers, fetchChats } from '../../actions/homeActions';
 import type { ChatType } from '../../types';
 
 const styles = StyleSheet.create({
@@ -43,6 +43,7 @@ class HomeRoute extends Component {
   }
 
   render() {
+    console.log(this.props.users);
     return (
       <View style={styles.container}>
         <Tabs
@@ -61,8 +62,10 @@ class HomeRoute extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  users: state.home.users,
+  usersFetchFailedErrorMessage: state.home.usersFetchFailedErrorMessage,
   chats: state.home.chats,
-  chatsFetchFailedErrorMessage: state.home.chatsFetchFailedErrorMessage
+  chatsFetchFailedErrorMessage: state.home.chatsFetchFailedErrorMessage,
 });
 
 const mapDispatchToProps = {

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import Home from './routes/Home';
 import Chat from './routes/Chat';
-import { fetchChats, updateChatLastMessage } from './actions/homeActions';
+import { fetchUsers, fetchChats, updateChatLastMessage } from './actions/homeActions';
 import { recieveChatMessage } from './actions/chatActions';
 import type { FullState } from './reducers/mainReducer';
 import type { User, Message, Messages } from './types';
@@ -35,6 +35,7 @@ class Index extends Component {
     this.state = {
       ws: new WebSocket(`${SOCKET_ROOT}chat_app/${props.user.id}/?user_token=${TOKEN}`)
     };
+    props.onFetchUsers();
     props.onFetchChats();
   }
 
@@ -77,6 +78,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
+  onFetchUsers: fetchUsers,
   onFetchChats: fetchChats,
   onRecieveChatMessage: recieveChatMessage,
   onUpdateChatLastMessage: updateChatLastMessage,

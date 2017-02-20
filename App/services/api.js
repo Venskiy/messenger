@@ -20,6 +20,26 @@ export const getAuthenticatedUser = () => {
   });
 };
 
+export const fetchUsers = () => {
+  return new Promise((resolve, reject) => {
+    let headers = new Headers();
+    headers.append('Authorization', `Token ${TOKEN}`);
+
+    fetch(`${API_ROOT}api/get_all_users`, {
+      method: 'GET',
+      headers: headers,
+    })
+    .then(response => {
+      if(response.status === 200) {
+        response.json().then(users => resolve(users));
+      }
+      else {
+        response.json().then(message => reject(message));
+      }
+    });
+  });
+};
+
 export const fetchChats = () => {
   return new Promise((resolve, reject) => {
     let headers = new Headers();
