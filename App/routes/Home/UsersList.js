@@ -3,7 +3,8 @@
 import React from 'react';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
 
-import type { User } from '../../types.js';
+import UserRow from './UserRow';
+import type { User } from '../../types';
 
 type UsersListProps = {
   users: Array<User>,
@@ -15,7 +16,7 @@ const UsersList = ({ users }: UsersListProps) => (
     contentContainerStyle={{ alignItems: 'stretch' }}
   >
     {users.map((user, idx) => (
-      <Text key={idx}>{user.username}</Text>
+      <UserRow user={user} key={idx} />
     ))}
   </ScrollView>
 );
