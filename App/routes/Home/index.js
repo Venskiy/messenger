@@ -5,9 +5,10 @@ import { StyleSheet, View, Text, NavigatorIOS } from 'react-native';
 import Tabs from 'react-native-tabs';
 import { connect } from 'react-redux';
 
+import UsersList from './UsersList';
 import ChatsList from './ChatsList';
 import { fetchUsers, fetchChats } from '../../actions/homeActions';
-import type { ChatType } from '../../types';
+import type { User, ChatType } from '../../types';
 
 const styles = StyleSheet.create({
   container: {
@@ -29,6 +30,7 @@ class HomeRoute extends Component {
 
   props: {
     navigator: NavigatorIOS,
+    users: Array<User>,
     chats: Array<ChatType>,
     chatsFetchFailedErrorMessage: string | Object,
     onFetchChatsButtonPressed: () => void,
@@ -38,12 +40,11 @@ class HomeRoute extends Component {
     super(props)
 
     this.state = {
-      tab: 'chats',
+      tab: 'users',
     };
   }
 
   render() {
-    console.log(this.props.users);
     return (
       <View style={styles.container}>
         <Tabs
@@ -55,7 +56,11 @@ class HomeRoute extends Component {
           <Text name="chats">Chats</Text>
           <Text name="users">Users</Text>
         </Tabs>
-        <ChatsList navigator={this.props.navigator} chats={this.props.chats} />
+        {this.state.tab === 'chats' ? (
+          <ChatsList navigator={this.props.navigator} chats={this.props.chats} />
+        ) : (
+          <UsersList users={this.props.users} />
+        )}
       </View>
     );
   }

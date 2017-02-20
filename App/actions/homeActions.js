@@ -4,19 +4,20 @@ import * as types from './actionTypes';
 import type { User, ChatType, Message } from '../types';
 
 type FetchUsers = { type: 'USERS_FETCH_REQUESTED' };
-type PutChats = { type: 'PUT_USERS', users: Array<User> };
+type PutUsers = { type: 'PUT_USERS', users: Array<User> };
 type SetUsersFetchFailedErrorMessage = { type: 'SET_USERS_FETCH_FAILED_ERROR_MESSAGE', errorMessage: string | Object };
 type FetchChats = { type: 'CHATS_FETCH_REQUESTED' };
 type PutChats = { type: 'PUT_CHATS', chats: Array<ChatType> };
 type SetChatsFetchFailedErrorMessage = { type: 'SET_CHATS_FETCH_FAILED_ERROR_MESSAGE', errorMessage: string | Object };
 type UpdateChatLastMessage = { type: 'UPDATE_CHAT_LAST_MESSAGE', chatId: number | string, senderId: number | string, message: Message };
 
-// export type HomeAction = PutChats | SetChatsFetchFailedErrorMessage | UpdateChatLastMessage | any;
+// export type HomeAction = PutUsers | SetUsersFetchFailedErrorMessage |
+//  PutChats | SetChatsFetchFailedErrorMessage | UpdateChatLastMessage | any;
 export type HomeAction = UpdateChatLastMessage | any;
 
 export const fetchUsers = (): FetchUsers => ({ type: types.USERS_FETCH_REQUESTED });
-export const putUsers = (users: Array<User>): putUsers => ({ type: types.PUT_USERS, users: users });
-export const SetUsersFetchFailedErrorMessage = (errorMessage: string | Object): SetUsersFetchFailedErrorMessage => ({
+export const putUsers = (users: Array<User>): PutUsers => ({ type: types.PUT_USERS, users: users });
+export const setUsersFetchFailedErrorMessage = (errorMessage: string | Object): SetUsersFetchFailedErrorMessage => ({
   type: types.SET_USERS_FETCH_FAILED_ERROR_MESSAGE,
   errorMessage: errorMessage,
 });

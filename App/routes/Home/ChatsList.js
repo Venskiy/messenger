@@ -12,7 +12,7 @@ type ChatsListProps = {
   chats: Array<ChatType>,
 }
 
-const ChatsList = ({chats, navigator}: ChatsListProps) => (
+const ChatsList = ({ chats, navigator }: ChatsListProps) => (
   <ScrollView
     style={{ flex: 1, backgroundColor: 'white' }}
     contentContainerStyle={{ alignItems: 'stretch' }}

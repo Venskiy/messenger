@@ -22,7 +22,7 @@ type ChatRowProps = {
   onSelectChat: (chat: ChatType) => void
 }
 
-const ChatRow = ({chat, onSelectChat}: ChatRowProps) => (
+const ChatRow = ({ chat, onSelectChat }: ChatRowProps) => (
   <TouchableOpacity style={styles.container} onPress={() => onSelectChat(chat)}>
     <Text style={styles.text}>{chat.interlocutor_username}</Text>
     <Text style={styles.text}>{chat.last_message}</Text>
