@@ -52,6 +52,16 @@ class ChatRoute extends Component {
     props.onFetchMessagesEvent(props.chat.id);
   }
 
+  componentDidUpdate() {
+    const chat = this.props.chat;
+    if(!chat.last_message_is_read && chat.last_message_sender_id.toString() === chat.interlocutor_id.toString()) {
+      this.state.ws.send(JSON.stringify({
+        type: constants.READ_MESSAGE,
+        interlocutorId: chat.interlocutor_id,
+      }));
+    }
+  }
+
   sendMessage() {
     if(this.state.text.replace(/\s+/g, '') !== '') {
       const message = {

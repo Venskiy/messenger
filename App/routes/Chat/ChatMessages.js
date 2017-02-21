@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import {  ScrollView } from 'react-native';
 import AutoScroll from 'react-native-auto-scroll';
 
 import MessageRow from './MessageRow';
