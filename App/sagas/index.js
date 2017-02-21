@@ -1,6 +1,8 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 
 import { api } from '../services';
+import { TOKEN, SOCKET_ROOT } from '../config/settings';
+import { waitForSocketConnection } from '../utils/utils';
 import * as types from '../actions/actionTypes';
 import { putAuthenticatedUser, setAuthenticatedUserFetchErrorMessage } from '../actions/mainActions';
 import {
@@ -33,11 +35,20 @@ function* fetchUsers(action) {
 function* createChat(action) {
   try {
     const response = yield call(api.createChat, action.username);
-    console.log(response);
     if(response.type === 'CHAT_ALREADY_EXISTS') {
       alert('You already have chat with this person');
     } else if(response.type === 'CHAT_NEW') {
+      const ws = new WebSocket(`${SOCKET_ROOT}tornado_chat/${response.chat.id}/?user_token=${TOKEN}`);
+      ws.onopen = function() {
+        ws.send(JSON.stringify({
+          type: 'DISPLAY_CHAT_ON_RECIPIENT_SIDE',
+          chat: response.chat,
+        }));
+        ws.close();
+      };
+
       yield put(addNewChat(response.chat));
+      alert('Chat have been created successfully');
     }
   } catch (e) {
     console.log(e);
