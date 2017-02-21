@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import { Content } from 'native-base';
 
 import UserRow from './UserRow';
 import type { User } from '../../types';
@@ -11,14 +11,11 @@ type UsersListProps = {
 }
 
 const UsersList = ({ users }: UsersListProps) => (
-  <ScrollView
-    style={{ flex: 1, backgroundColor: '#fff', marginBottom: 50 }}
-    contentContainerStyle={{ alignItems: 'stretch' }}
-  >
+  <Content>
     {users.map((user, idx) => (
       <UserRow user={user} key={idx} />
     ))}
-  </ScrollView>
+  </Content>
 );
 
 export default UsersList;

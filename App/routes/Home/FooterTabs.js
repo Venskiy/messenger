@@ -3,7 +3,6 @@
 import React from 'react';
 import { Content, Footer, FooterTab, Button, Icon, Text, Badge } from 'native-base';
 
-
 type FooterTabsProps = {
   activeTab: string,
   onSelectTab: (tab: sting) => void,

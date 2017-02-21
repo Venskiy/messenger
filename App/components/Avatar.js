@@ -10,7 +10,7 @@ type AvatarProps = {
 const Avatar = ({ username }: AvatarProps) => (
   <Image
     source={{ uri: `https://sigil.cupcake.io/${username}` }}
-    style={{ borderRadius: 25, height: 50, width: 50 }}
+    style={{ borderRadius: 28, height: 56, width: 56 }}
   />
 );
 
