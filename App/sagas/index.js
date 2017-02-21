@@ -29,6 +29,10 @@ function* fetchUsers(action) {
   }
 }
 
+function* createChat(action) {
+  console.log(action.username);
+}
+
 function* fetchChats(action) {
   try {
     const chats = yield call(api.fetchChats);
@@ -50,6 +54,7 @@ function* fetchMessages(action) {
 function* mySaga() {
   yield takeLatest(types.GET_AUTHENTICATED_USER, getAuthenticatedUser);
   yield takeLatest(types.USERS_FETCH_REQUESTED, fetchUsers);
+  yield takeLatest(types.CREATE_CHAT_REQUESTED, createChat);
   yield takeLatest(types.CHATS_FETCH_REQUESTED, fetchChats);
   yield takeLatest(types.MESSAGES_FETCH_REQUESTED, fetchMessages);
 }

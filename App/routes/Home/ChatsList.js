@@ -17,9 +17,9 @@ const ChatsList = ({ chats, navigator }: ChatsListProps) => (
   <Content>
     {chats.map((chat, idx) => (
       <ChatRow
+        key={idx}
         chat={chat}
         onSelectChat={() => navigator.push(Routes.getChatRoute(chat))}
-        key={idx}
       />
     ))}
   </Content>

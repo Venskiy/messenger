@@ -8,12 +8,13 @@ import type { User } from '../../types';
 
 type UsersListProps = {
   users: Array<User>,
+  onCreateChat: (username: string) => void,
 }
 
-const UsersList = ({ users }: UsersListProps) => (
+const UsersList = ({ users, onCreateChat }: UsersListProps) => (
   <Content>
     {users.map((user, idx) => (
-      <UserRow user={user} key={idx} />
+      <UserRow key={idx} user={user} onCreateChat={onCreateChat} />
     ))}
   </Content>
 );

@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import UsersList from './UsersList';
 import ChatsList from './ChatsList';
 import FooterTabs from './FooterTabs';
-import { fetchUsers, fetchChats } from '../../actions/homeActions';
+import { fetchUsers, createChat, fetchChats } from '../../actions/homeActions';
 import type { User, ChatType } from '../../types';
 
 class HomeRoute extends Component {
@@ -21,6 +21,7 @@ class HomeRoute extends Component {
     users: Array<User>,
     chats: Array<ChatType>,
     chatsFetchFailedErrorMessage: string | Object,
+    onCreateChat: (username: string) => void,
     onFetchChatsButtonPressed: () => void,
   }
 
@@ -38,7 +39,7 @@ class HomeRoute extends Component {
         {this.state.activeTab === 'chats' ? (
           <ChatsList navigator={this.props.navigator} chats={this.props.chats} />
         ) : (
-          <UsersList users={this.props.users} />
+          <UsersList users={this.props.users} onCreateChat={this.props.onCreateChat} />
         )}
         <FooterTabs
           activeTab={this.state.activeTab}
@@ -57,6 +58,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
+  onCreateChat: createChat,
   onFetchChatsButtonPressed: fetchChats,
 }
 
