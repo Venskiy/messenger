@@ -40,6 +40,31 @@ export const fetchUsers = () => {
   });
 };
 
+export const createChat = (username) => {
+  return new Promise((resolve, reject) => {
+    let headers = new Headers();
+    headers.append('Authorization', `Token ${TOKEN}`);
+    headers.append('Accept', 'application/json');
+    headers.append('Content-Type', 'application/json');
+
+    fetch(`${API_ROOT}api/create_chat`, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        username: username
+      }),
+    })
+    .then(response => {
+      if(response.status === 200) {
+        response.json().then(response => resolve(response));
+      }
+      else {
+        response.json().then(message => reject(message));
+      }
+    });
+  });
+};
+
 export const fetchChats = () => {
   return new Promise((resolve, reject) => {
     let headers = new Headers();

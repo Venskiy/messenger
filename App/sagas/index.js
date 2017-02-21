@@ -30,7 +30,12 @@ function* fetchUsers(action) {
 }
 
 function* createChat(action) {
-  console.log(action.username);
+  try {
+    const response = yield call(api.createChat, action.username);
+    console.log(response);
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 function* fetchChats(action) {
