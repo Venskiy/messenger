@@ -2,6 +2,7 @@
 
 import React from 'react';
 import {  ScrollView } from 'react-native';
+import AutoScroll from 'react-native-auto-scroll';
 
 import MessageRow from './MessageRow';
 import type { User, Message } from '../../types.js';
@@ -12,7 +13,7 @@ type ChatMessagesProps = {
 }
 
 const ChatMessages = ({ authenticatedUser, chatMessages }: ChatMessagesProps) => (
-  <ScrollView
+  <AutoScroll
     style={{ flex: 1, backgroundColor: 'white' }}
     contentContainerStyle={{ alignItems: 'stretch' }}
   >
@@ -24,7 +25,7 @@ const ChatMessages = ({ authenticatedUser, chatMessages }: ChatMessagesProps) =>
         key={idx}
       />
     ))}
-  </ScrollView>
+  </AutoScroll>
 );
 
 export default ChatMessages;
