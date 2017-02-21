@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import Home from './routes/Home';
 import Chat from './routes/Chat';
-import { fetchUsers, fetchChats, updateChatLastMessage } from './actions/homeActions';
+import { fetchUsers, addNewChat, fetchChats, updateChatLastMessage } from './actions/homeActions';
 import { recieveChatMessage } from './actions/chatActions';
 import type { FullState } from './reducers/mainReducer';
 import type { User, Message, Messages } from './types';
@@ -49,6 +49,9 @@ class Index extends Component {
           }
           nextProps.onUpdateChatLastMessage(data.chat_id, data.sender_id, data.message);
           break;
+        case 'DISPLAY_CHAT_ON_RECIPIENT_SIDE':
+          nextProps.onAddNewChat(data.chat);
+          break;
         default:
           break;
       }
@@ -79,6 +82,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   onFetchUsers: fetchUsers,
+  onAddNewChat: addNewChat,
   onFetchChats: fetchChats,
   onRecieveChatMessage: recieveChatMessage,
   onUpdateChatLastMessage: updateChatLastMessage,
