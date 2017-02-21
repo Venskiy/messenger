@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import UsersList from './UsersList';
 import ChatsList from './ChatsList';
 import FooterTabs from './FooterTabs';
+import { getSortedChats } from '../../config/selectors';
 import { fetchUsers, createChat, fetchChats } from '../../actions/homeActions';
 import type { User, ChatType } from '../../types';
 
@@ -53,7 +54,7 @@ class HomeRoute extends Component {
 const mapStateToProps = (state) => ({
   users: state.home.users,
   usersFetchFailedErrorMessage: state.home.usersFetchFailedErrorMessage,
-  chats: state.home.chats,
+  chats: getSortedChats(state),
   chatsFetchFailedErrorMessage: state.home.chatsFetchFailedErrorMessage,
 });
 
