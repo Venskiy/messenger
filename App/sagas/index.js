@@ -13,6 +13,7 @@ import {
   setChatsFetchFailedErrorMessage
 } from '../actions/homeActions';
 import { putChatMessages, setMessagesFetchFailedErrorMessage } from '../actions/chatActions';
+import * as constants from '../utils/constants';
 
 function* getAuthenticatedUser(action) {
   try {
@@ -35,13 +36,13 @@ function* fetchUsers(action) {
 function* createChat(action) {
   try {
     const response = yield call(api.createChat, action.username);
-    if(response.type === 'CHAT_ALREADY_EXISTS') {
+    if(response.type === constants.CHAT_ALREADY_EXISTS) {
       alert('You already have chat with this person');
-    } else if(response.type === 'CHAT_NEW') {
+    } else if(response.type === constants.CHAT_NEW) {
       const ws = new WebSocket(`${SOCKET_ROOT}tornado_chat/${response.chat.id}/?user_token=${TOKEN}`);
       ws.onopen = function() {
         ws.send(JSON.stringify({
-          type: 'DISPLAY_CHAT_ON_RECIPIENT_SIDE',
+          type: constants.DISPLAY_CHAT_ON_RECIPIENT_SIDE,
           chat: response.chat,
         }));
         ws.close();

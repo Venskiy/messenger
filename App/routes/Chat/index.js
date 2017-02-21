@@ -10,6 +10,7 @@ import { SOCKET_ROOT, TOKEN } from '../../config/settings';
 import Routes from '../../config/routes';
 import { fetchChatMessages } from '../../actions/chatActions';
 import type { User, ChatType, Messages } from '../../types';
+import * as constants from '../../utils/constants';
 
 const styles = StyleSheet.create({
   container: {
@@ -62,7 +63,7 @@ class ChatRoute extends Component {
   sendMessage() {
     if(this.state.text.replace(/\s+/g, '') !== '') {
       const message = {
-        type: 'SEND_MESSAGE',
+        type: constants.SEND_MESSAGE,
         interlocutorId: this.props.chat.interlocutor_id,
         message: this.state.text
       }

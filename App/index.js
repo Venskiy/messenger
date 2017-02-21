@@ -11,6 +11,7 @@ import { recieveChatMessage } from './actions/chatActions';
 import type { FullState } from './reducers/mainReducer';
 import type { User, Message, Messages } from './types';
 import { SOCKET_ROOT, TOKEN } from './config/settings';
+import * as constants from './utils/constants';
 
 const styles = StyleSheet.create({
   container: {
@@ -43,13 +44,13 @@ class Index extends Component {
     this.state.ws.onmessage = function(e: any) {
       const data = JSON.parse(e.data);
       switch (data.type) {
-        case 'SEND_MESSAGE':
+        case constants.SEND_MESSAGE:
           if(nextProps.messages[data.chat_id]) {
             nextProps.onRecieveChatMessage(data.chat_id, data.message);
           }
           nextProps.onUpdateChatLastMessage(data.chat_id, data.sender_id, data.message);
           break;
-        case 'DISPLAY_CHAT_ON_RECIPIENT_SIDE':
+        case constants.DISPLAY_CHAT_ON_RECIPIENT_SIDE:
           nextProps.onAddNewChat(data.chat);
           break;
         default:
