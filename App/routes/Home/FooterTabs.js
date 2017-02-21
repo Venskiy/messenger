@@ -5,7 +5,7 @@ import { Content, Footer, FooterTab, Button, Icon, Text, Badge } from 'native-ba
 
 type FooterTabsProps = {
   activeTab: string,
-  onSelectTab: (tab: sting) => void,
+  onSelectTab: (tab: string) => void,
 }
 
 const FooterTabs = ({ activeTab, onSelectTab }: FooterTabsProps) => (

@@ -26,8 +26,7 @@ type ChatRowProps = {
 }
 
 const ChatRow = ({ chat, onSelectChat }: ChatRowProps) => (
-  <TouchableOpacity onPress={() => onSelectChat(chat)}>
-    <ListItem avatar>
+    <ListItem onPress={() => onSelectChat(chat)} avatar>
       <Left>
         <Thumbnail source={{ uri: `https://sigil.cupcake.io/${chat.interlocutor_username}` }} />
       </Left>
@@ -39,7 +38,6 @@ const ChatRow = ({ chat, onSelectChat }: ChatRowProps) => (
         <Text note>{getMessageTimestamp(new Date(chat.last_message_timestamp))}</Text>
       </Right>
     </ListItem>
-  </TouchableOpacity>
 );
 
 export default ChatRow;
