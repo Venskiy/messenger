@@ -33,6 +33,9 @@ function* createChat(action) {
   try {
     const response = yield call(api.createChat, action.username);
     console.log(response);
+    if(response.type === 'CHAT_ALREADY_EXISTS') {
+      alert('You already have chat with this person');
+    }
   } catch (e) {
     console.log(e);
   }
