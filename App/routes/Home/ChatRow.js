@@ -5,6 +5,7 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Left, Body, Right, ListItem, Thumbnail, Text } from 'native-base';
 
 import Avatar from '../../components/Avatar';
+import { getMessageTimestamp } from '../../utils/utils';
 import type { ChatType } from '../../types.js';
 
 const styles = StyleSheet.create({
@@ -35,7 +36,7 @@ const ChatRow = ({ chat, onSelectChat }: ChatRowProps) => (
         <Text note>{chat.last_message}</Text>
       </Body>
       <Right>
-        <Text note>3:43 pm</Text>
+        <Text note>{getMessageTimestamp(new Date(chat.last_message_timestamp))}</Text>
       </Right>
     </ListItem>
   </TouchableOpacity>
