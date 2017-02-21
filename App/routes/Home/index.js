@@ -28,7 +28,7 @@ class HomeRoute extends Component {
     super(props)
 
     this.state = {
-      activeTab: 'users',
+      activeTab: 'chats',
     };
   }
 

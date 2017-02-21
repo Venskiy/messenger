@@ -1,7 +1,8 @@
 // @flow
 
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Left, Body, Right, ListItem, Thumbnail, Text } from 'native-base';
 
 import Avatar from '../../components/Avatar';
 import type { ChatType } from '../../types.js';
@@ -24,10 +25,19 @@ type ChatRowProps = {
 }
 
 const ChatRow = ({ chat, onSelectChat }: ChatRowProps) => (
-  <TouchableOpacity style={styles.container} onPress={() => onSelectChat(chat)}>
-    <Avatar username={chat.interlocutor_username} />
-    <Text style={styles.text}>{chat.interlocutor_username}</Text>
-    <Text style={styles.text}>{chat.last_message}</Text>
+  <TouchableOpacity onPress={() => onSelectChat(chat)}>
+    <ListItem avatar>
+      <Left>
+        <Thumbnail source={{ uri: `https://sigil.cupcake.io/${chat.interlocutor_username}` }} />
+      </Left>
+      <Body>
+        <Text>{chat.interlocutor_username}</Text>
+        <Text note>{chat.last_message}</Text>
+      </Body>
+      <Right>
+        <Text note>3:43 pm</Text>
+      </Right>
+    </ListItem>
   </TouchableOpacity>
 );
 

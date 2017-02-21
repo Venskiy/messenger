@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { StyleSheet, View, ScrollView, NavigatorIOS } from 'react-native';
+import { Content } from 'native-base';
 
 import ChatRow from './ChatRow';
 import Routes from '../../config/routes';
@@ -13,10 +14,7 @@ type ChatsListProps = {
 }
 
 const ChatsList = ({ chats, navigator }: ChatsListProps) => (
-  <ScrollView
-    style={{ flex: 1, backgroundColor: '#fff', marginBottom: 50 }}
-    contentContainerStyle={{ alignItems: 'stretch' }}
-  >
+  <Content>
     {chats.map((chat, idx) => (
       <ChatRow
         chat={chat}
@@ -24,7 +22,7 @@ const ChatsList = ({ chats, navigator }: ChatsListProps) => (
         key={idx}
       />
     ))}
-  </ScrollView>
+  </Content>
 );
 
 export default ChatsList;
