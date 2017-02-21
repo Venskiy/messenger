@@ -36,7 +36,7 @@ class HomeRoute extends Component {
 
   render() {
     return (
-      <Container>
+      <Container style={{ paddingTop: 66 }}>
         {this.state.activeTab === 'chats' ? (
           <ChatsList navigator={this.props.navigator} chats={this.props.chats} />
         ) : (

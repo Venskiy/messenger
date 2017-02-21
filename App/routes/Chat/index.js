@@ -76,12 +76,11 @@ class ChatRoute extends Component {
   render() {
     const chatMessages = this.props.messages[this.props.chat.id];
     return chatMessages ? (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, paddingTop: 66 }}>
         <ScrollView
           style={{ flex: 1, backgroundColor: 'white' }}
           contentContainerStyle={{ alignItems: 'stretch' }}
         >
-          <View style={{ height: 90 }} />
           {chatMessages.map((msg, idx) => (
             <MessageRow
               username={msg.sender_username}
