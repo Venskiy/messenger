@@ -1,10 +1,10 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, ScrollView, TextInput, NavigatorIOS } from 'react-native';
+import { StyleSheet, View, Text, NavigatorIOS } from 'react-native';
 import { connect } from 'react-redux';
 
-import MessageRow from './MessageRow';
+import ChatMessages from './ChatMessages';
 import Toolbar from './Toolbar';
 import { SOCKET_ROOT, TOKEN } from '../../config/settings';
 import Routes from '../../config/routes';
@@ -23,14 +23,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
-  },
-  input: {
-    flex: 1,
-    padding: 10,
-    height: 50,
-    fontSize: 16,
-    lineHeight: 24,
-    color: '#666',
   },
 });
 
@@ -77,19 +69,10 @@ class ChatRoute extends Component {
     const chatMessages = this.props.messages[this.props.chat.id];
     return chatMessages ? (
       <View style={{ flex: 1, paddingTop: 66 }}>
-        <ScrollView
-          style={{ flex: 1, backgroundColor: 'white' }}
-          contentContainerStyle={{ alignItems: 'stretch' }}
-        >
-          {chatMessages.map((msg, idx) => (
-            <MessageRow
-              username={msg.sender_username}
-              isOwn={this.props.authenticatedUser.username===msg.sender_username}
-              text={msg.text}
-              key={idx}
-            />
-          ))}
-        </ScrollView>
+        <ChatMessages
+          authenticatedUser={this.props.authenticatedUser}
+          chatMessages={chatMessages}
+        />
         <Toolbar
           text={this.state.text}
           onChangeText={(text) => this.setState({ text })}
