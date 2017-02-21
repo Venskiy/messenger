@@ -68,7 +68,9 @@ function* fetchChats(action) {
 function* fetchMessages(action) {
   try {
     const response = yield call(api.fetchMessages, action.chatId);
-    yield put(putChatMessages(action.chatId, response.chat_messages));
+    let chatMessages = response.chat_messages;
+    chatMessages.reverse();
+    yield put(putChatMessages(action.chatId, chatMessages));
   } catch (e) {
     yield put(setMessagesFetchFailedErrorMessage(e));
   }

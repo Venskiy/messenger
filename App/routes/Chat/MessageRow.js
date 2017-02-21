@@ -17,8 +17,8 @@ const styles = {
     padding: 10,
   },
   pad: {
-    width: 40,
-    height: 40,
+    width: 0,
+    height: 0,
   },
 };
 
