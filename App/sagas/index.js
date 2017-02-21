@@ -6,6 +6,7 @@ import { putAuthenticatedUser, setAuthenticatedUserFetchErrorMessage } from '../
 import {
   putUsers,
   SetUsersFetchFailedErrorMessage,
+  addNewChat,
   putChats,
   setChatsFetchFailedErrorMessage
 } from '../actions/homeActions';
@@ -35,6 +36,8 @@ function* createChat(action) {
     console.log(response);
     if(response.type === 'CHAT_ALREADY_EXISTS') {
       alert('You already have chat with this person');
+    } else if(response.type === 'CHAT_NEW') {
+      yield put(addNewChat(response.chat));
     }
   } catch (e) {
     console.log(e);

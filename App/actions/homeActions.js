@@ -7,6 +7,7 @@ type FetchUsers = { type: 'USERS_FETCH_REQUESTED' };
 type PutUsers = { type: 'PUT_USERS', users: Array<User> };
 type SetUsersFetchFailedErrorMessage = { type: 'SET_USERS_FETCH_FAILED_ERROR_MESSAGE', errorMessage: string | Object };
 type CreateChat = { type: 'CREATE_CHAT_REQUESTED', username: string };
+type AddNewChat = { type: 'ADD_NEW_CHAT', chat: ChatType };
 type FetchChats = { type: 'CHATS_FETCH_REQUESTED' };
 type PutChats = { type: 'PUT_CHATS', chats: Array<ChatType> };
 type SetChatsFetchFailedErrorMessage = { type: 'SET_CHATS_FETCH_FAILED_ERROR_MESSAGE', errorMessage: string | Object };
@@ -23,6 +24,7 @@ export const setUsersFetchFailedErrorMessage = (errorMessage: string | Object): 
   errorMessage: errorMessage,
 });
 export const createChat = (username: string): CreateChat => ({ type: types.CREATE_CHAT_REQUESTED, username: username });
+export const addNewChat = (chat: ChatType): AddNewChat => ({ type: types.ADD_NEW_CHAT, chat: chat });
 export const fetchChats = (): FetchChats => ({ type: types.CHATS_FETCH_REQUESTED });
 export const putChats = (chats: Array<ChatType>): PutChats => ({ type: types.PUT_CHATS, chats: chats });
 export const setChatsFetchFailedErrorMessage = (errorMessage: string | Object): SetChatsFetchFailedErrorMessage => ({

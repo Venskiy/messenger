@@ -35,6 +35,8 @@ export const homeReducer = (state: HomeState = initialState, action: HomeAction 
       return { ...state, users: action.users };
     case types.SET_USERS_FETCH_FAILED_ERROR_MESSAGE:
       return { ...state, usersFetchFailedErrorMessage: action.errorMessage };
+    case types.ADD_NEW_CHAT:
+      return { ...state, chats: state.chats.concat(action.chat) };
     case types.PUT_CHATS:
       return { ...state, chats: action.chats };
     case types.SET_CHATS_FETCH_FAILED_ERROR_MESSAGE:
