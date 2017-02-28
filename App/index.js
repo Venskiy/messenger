@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import Home from './routes/Home';
 import Chat from './routes/Chat';
-import { fetchUsers, addNewChat, fetchChats, updateChatLastMessage } from './actions/homeActions';
+import { fetchUsers, addNewChat, fetchChats, updateChatLastMessage, readChatLastMessage } from './actions/homeActions';
 import { recieveChatMessage } from './actions/chatActions';
 import type { FullState } from './reducers/mainReducer';
 import type { User, Message, Messages } from './types';
@@ -43,12 +43,16 @@ class Index extends Component {
   componentWillUpdate(nextProps: any) {
     this.state.ws.onmessage = function(e: any) {
       const data = JSON.parse(e.data);
+      console.log(data);
       switch (data.type) {
         case constants.SEND_MESSAGE:
           if(nextProps.messages[data.chat_id]) {
             nextProps.onRecieveChatMessage(data.chat_id, data.message);
           }
           nextProps.onUpdateChatLastMessage(data.chat_id, data.sender_id, data.message);
+          break;
+        case constants.READ_MESSAGE:
+          nextProps.onReadChatLastMessage(data.chat_id);
           break;
         case constants.DISPLAY_CHAT_ON_RECIPIENT_SIDE:
           nextProps.onAddNewChat(data.chat);
@@ -87,6 +91,7 @@ const mapDispatchToProps = {
   onFetchChats: fetchChats,
   onRecieveChatMessage: recieveChatMessage,
   onUpdateChatLastMessage: updateChatLastMessage,
+  onReadChatLastMessage: readChatLastMessage,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index);

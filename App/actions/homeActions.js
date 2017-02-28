@@ -12,6 +12,7 @@ type FetchChats = { type: 'CHATS_FETCH_REQUESTED' };
 type PutChats = { type: 'PUT_CHATS', chats: Array<ChatType> };
 type SetChatsFetchFailedErrorMessage = { type: 'SET_CHATS_FETCH_FAILED_ERROR_MESSAGE', errorMessage: string | Object };
 type UpdateChatLastMessage = { type: 'UPDATE_CHAT_LAST_MESSAGE', chatId: number | string, senderId: number | string, message: Message };
+type ReadChatLastMessage = { type: 'READ_CHAT_LAST_MESSAGE', chatId: number | string };
 
 // export type HomeAction = PutUsers | SetUsersFetchFailedErrorMessage |
 //  PutChats | SetChatsFetchFailedErrorMessage | UpdateChatLastMessage | any;
@@ -36,4 +37,8 @@ export const updateChatLastMessage = (chatId: number | string, senderId: number 
   chatId: chatId,
   senderId: senderId,
   message: message,
+});
+export const readChatLastMessage = (chatId: number | string): ReadChatLastMessage => ({
+  type: types.READ_CHAT_LAST_MESSAGE,
+  chatId: chatId,
 });

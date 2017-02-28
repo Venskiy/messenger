@@ -52,6 +52,14 @@ export const homeReducer = (state: HomeState = initialState, action: HomeAction 
           last_message_timestamp: action.message.timestamp
         } : chat)
       };
+    case types.READ_CHAT_LAST_MESSAGE:
+      return {
+        ...state,
+        chats: state.chats.map(chat => parseInt(chat.id) === parseInt(action.chatId) ? {
+          ...chat,
+          last_message_is_read: true,
+        } : chat)
+      };
     default:
       return state;
   }

@@ -36,6 +36,7 @@ const ChatRow = ({ chat, onSelectChat }: ChatRowProps) => (
       </Body>
       <Right>
         <Text note>{getMessageTimestamp(new Date(chat.last_message_timestamp))}</Text>
+        {chat.last_message_is_read ? null : <Text>*</Text>}
       </Right>
     </ListItem>
 );
