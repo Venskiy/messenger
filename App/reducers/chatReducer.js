@@ -25,13 +25,17 @@ export const chatReducer = (state: ChatState = initialState, action: ChatAction 
         ...state.messages, [action.chatId]: state.messages[action.chatId].concat(action.message)
       }};
     case types.READ_CHAT_MESSAGES:
-      return { ...state, messages: {
-        ...state.messages,
-        [action.chatId]: state.messages[action.chatId].map(message => message.is_read ? message : {
-          ...message,
-          is_read: true,
-        }),
-      }};
+      if(state.messages[action.chatId]) {
+        return { ...state, messages: {
+          ...state.messages,
+          [action.chatId]: state.messages[action.chatId].map(message => message.is_read ? message : {
+            ...message,
+            is_read: true,
+          }),
+        }};
+      } else {
+        return state;
+      }
     default:
       return state;
   }
