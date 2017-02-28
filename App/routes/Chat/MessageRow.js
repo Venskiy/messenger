@@ -26,14 +26,16 @@ type MessageRowProps = {
   username: string,
   isOwn: boolean,
   text: string,
+  isRead: boolean,
 }
 
-const MessageRow = ({ username, isOwn, text }: MessageRowProps) => {
+const MessageRow = ({ username, isOwn, text, isRead }: MessageRowProps) => {
   return isOwn ? (
     <View style={styles.container}>
       <View username={username} style={{ ...styles.pad, marginRight: 10 }} />
       <View style={{ flex: 1 }} />
       <MessageBubble isOwn={isOwn} text={text} />
+      {isRead ? null : <Text>*</Text>}
     </View>
   ) : (
     <View style={styles.container}>

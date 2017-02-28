@@ -21,6 +21,7 @@ const ChatMessages = ({ authenticatedUser, chatMessages }: ChatMessagesProps) =>
         username={msg.sender_username}
         isOwn={authenticatedUser.username===msg.sender_username}
         text={msg.text}
+        isRead={msg.is_read}
         key={idx}
       />
     ))}
