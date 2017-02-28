@@ -8,7 +8,7 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import ChatMessages from './ChatMessages';
 import Toolbar from './Toolbar';
 import { SOCKET_ROOT, TOKEN } from '../../config/settings';
-import Routes from '../../config/routes';
+import { getChatById } from '../../config/selectors';
 import { fetchChatMessages } from '../../actions/chatActions';
 import type { User, ChatType, Messages } from '../../types';
 import * as constants from '../../utils/constants';
@@ -35,6 +35,7 @@ class ChatRoute extends Component {
 
   props: {
     navigator: NavigatorIOS,
+    chatId: number | string,
     chat: ChatType,
     authenticatedUser: User,
     messages: Messages,
@@ -46,14 +47,14 @@ class ChatRoute extends Component {
     super(props)
 
     this.state = {
-      ws: new WebSocket(`${SOCKET_ROOT}tornado_chat/${props.chat.id}/?user_token=${TOKEN}`),
+      ws: new WebSocket(`${SOCKET_ROOT}tornado_chat/${props.chatId}/?user_token=${TOKEN}`),
       text: '',
     };
 
-    props.onFetchMessagesEvent(props.chat.id);
+    props.onFetchMessagesEvent(props.chatId);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const chat = this.props.chat;
     if(!chat.last_message_is_read && chat.last_message_sender_id.toString() === chat.interlocutor_id.toString()) {
       this.state.ws.send(JSON.stringify({
@@ -77,7 +78,7 @@ class ChatRoute extends Component {
   }
 
   render() {
-    const chatMessages = this.props.messages[this.props.chat.id];
+    const chatMessages = this.props.messages[this.props.chatId];
     return chatMessages ? (
       <View style={{ flex: 1, paddingTop: 66 }}>
         <ChatMessages
@@ -101,7 +102,8 @@ class ChatRoute extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownProps) => ({
+  chat: getChatById(state, ownProps.chatId),
   authenticatedUser: state.main.authenticatedUser,
   messages: state.chat.messages,
   messagesFetchFailedErrorMessage: state.chat.messagedFetchFailedErrorMessage

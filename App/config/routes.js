@@ -13,7 +13,7 @@ export const routes = {
     return {
       title: chat.interlocutor_username,
       component: Chat,
-      passProps: { chat: chat }
+      passProps: { chatId: chat.id }
     };
   }
 };
