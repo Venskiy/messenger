@@ -24,6 +24,14 @@ export const chatReducer = (state: ChatState = initialState, action: ChatAction 
       return { ...state, messages: {
         ...state.messages, [action.chatId]: state.messages[action.chatId].concat(action.message)
       }};
+    case types.READ_CHAT_MESSAGES:
+      return { ...state, messages: {
+        ...state.messages,
+        [action.chatId]: state.messages[action.chatId].map(message => message.is_read ? message : {
+          ...message,
+          is_read: true,
+        }),
+      }};
     default:
       return state;
   }
