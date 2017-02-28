@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, NavigatorIOS } from 'react-native';
 import { connect } from 'react-redux';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import ChatMessages from './ChatMessages';
 import Toolbar from './Toolbar';
@@ -88,6 +89,7 @@ class ChatRoute extends Component {
           onChangeText={(text) => this.setState({ text })}
           onSendMessage={this.sendMessage.bind(this)}
         />
+        <KeyboardSpacer />
       </View>
     ) : (
       <View style={styles.container}>

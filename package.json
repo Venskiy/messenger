@@ -12,6 +12,7 @@
     "react": "~15.4.0",
     "react-native": "0.41.2",
     "react-native-auto-scroll": "^0.0.1",
+    "react-native-keyboard-spacer": "^0.3.1",
     "react-redux": "^5.0.2",
     "redux": "^3.6.0",
     "redux-saga": "^0.14.3"
