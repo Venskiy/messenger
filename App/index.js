@@ -3,9 +3,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, NavigatorIOS } from 'react-native';
 import { connect } from 'react-redux';
+import CookieManager from 'react-native-cookies';
 
-import Home from './routes/Home';
-import Chat from './routes/Chat';
 import {
   fetchUsers,
   addNewChat,
@@ -17,6 +16,7 @@ import {
 import { recieveChatMessage, readChatMessages } from './actions/chatActions';
 import type { FullState } from './reducers/mainReducer';
 import type { User, Message, Messages } from './types';
+import routes from './config/routes';
 import { SOCKET_ROOT, TOKEN } from './config/settings';
 import * as constants from './utils/constants';
 
@@ -74,11 +74,12 @@ class Index extends Component {
   }
 
   render() {
-    let initialRoute = {
-      title: 'Home',
-      component: Home
-    }
-
+    let initialRoute = routes.getLoginRoute();
+    CookieManager.getAll((err, res) => {
+      initialRoute = routes.getHomeRoute();
+      console.log('pow');
+    });
+    console.log(initialRoute);
     return (
       <NavigatorIOS
         navigationBarHidden={false}
