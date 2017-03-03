@@ -60,7 +60,7 @@ class ChatRoute extends Component {
 
   componentDidUpdate(prevProps) {
     const chat = this.props.chat;
-    if(!chat.last_message_is_read && chat.last_message_sender_id.toString() === chat.interlocutor_id.toString()) {
+    if (!chat.last_message_is_read && chat.last_message_sender_id.toString() === chat.interlocutor_id.toString()) {
       this.state.ws.send(JSON.stringify({
         type: constants.READ_MESSAGE,
         interlocutorId: chat.interlocutor_id,
@@ -68,8 +68,19 @@ class ChatRoute extends Component {
     }
   }
 
+  componentWillUnmount() {
+    if (this.state.isTyping) {
+      clearTimeout(this.state.timeout);
+      this.setState({ isTyping: false });
+      this.state.ws.send(JSON.stringify({
+        type: constants.IS_USER_TYPING,
+        interlocutorId: this.props.chat.interlocutor_id,
+      }));
+    }
+  }
+
   sendMessage() {
-    if(this.state.text.replace(/\s+/g, '') !== '') {
+    if (this.state.text.replace(/\s+/g, '') !== '') {
       const message = {
         type: constants.SEND_MESSAGE,
         interlocutorId: this.props.chat.interlocutor_id,
@@ -85,7 +96,7 @@ class ChatRoute extends Component {
     this.setState({ text });
 
     clearTimeout(this.state.timeout);
-    if(!this.state.isTyping) {
+    if (!this.state.isTyping) {
       this.setState({ isTyping: true });
       this.state.ws.send(JSON.stringify({
         type: constants.IS_USER_TYPING,
