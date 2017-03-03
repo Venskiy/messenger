@@ -5,6 +5,7 @@ import { StyleSheet, View, Text, NavigatorIOS } from 'react-native';
 import { connect } from 'react-redux';
 import CookieManager from 'react-native-cookies';
 
+import { accessTokenFetchRequested } from './actions/mainActions';
 import {
   fetchUsers,
   addNewChat,
@@ -32,6 +33,7 @@ class Index extends Component {
   }
 
   props: {
+    accessToken: string,
     user: User,
     messages: Messages,
     onFetchChats: () => void,
@@ -43,6 +45,7 @@ class Index extends Component {
     this.state = {
       ws: new WebSocket(`${SOCKET_ROOT}chat_app/${props.user.id}/?user_token=${TOKEN}`)
     };
+    props.onFetchAccessToken();
     props.onFetchUsers();
     props.onFetchChats();
   }
@@ -77,9 +80,8 @@ class Index extends Component {
     let initialRoute = routes.getLoginRoute();
     CookieManager.getAll((err, res) => {
       initialRoute = routes.getHomeRoute();
-      console.log('pow');
     });
-    console.log(initialRoute);
+    console.log(this.props.accessToken);
     return (
       <NavigatorIOS
         navigationBarHidden={false}
@@ -92,11 +94,13 @@ class Index extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  accessToken: state.main.accessToken,
   user: state.main.authenticatedUser,
   messages: state.chat.messages,
 });
 
 const mapDispatchToProps = {
+  onFetchAccessToken: accessTokenFetchRequested,
   onFetchUsers: fetchUsers,
   onAddNewChat: addNewChat,
   onFetchChats: fetchChats,

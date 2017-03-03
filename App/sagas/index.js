@@ -1,10 +1,14 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 
-import { api } from '../services';
+import { api, cookie } from '../services';
 import { TOKEN, SOCKET_ROOT } from '../config/settings';
 import { waitForSocketConnection } from '../utils/utils';
 import * as types from '../actions/actionTypes';
-import { putAuthenticatedUser, setAuthenticatedUserFetchErrorMessage } from '../actions/mainActions';
+import {
+  putAccessToken,
+  putAuthenticatedUser,
+  setAuthenticatedUserFetchErrorMessage,
+} from '../actions/mainActions';
 import {
   putUsers,
   SetUsersFetchFailedErrorMessage,
@@ -14,6 +18,11 @@ import {
 } from '../actions/homeActions';
 import { putChatMessages, setMessagesFetchFailedErrorMessage } from '../actions/chatActions';
 import * as constants from '../utils/constants';
+
+function* fetchAccessToken(action) {
+  const accessToken = yield call(cookie.getAccessToken);
+  yield put(putAccessToken(accessToken));
+}
 
 function* getAuthenticatedUser(action) {
   try {
@@ -77,6 +86,7 @@ function* fetchMessages(action) {
 }
 
 function* mySaga() {
+  yield takeLatest(types.ACCESS_TOKEN_FETCH_REQUESTED, fetchAccessToken);
   yield takeLatest(types.GET_AUTHENTICATED_USER, getAuthenticatedUser);
   yield takeLatest(types.USERS_FETCH_REQUESTED, fetchUsers);
   yield takeLatest(types.CREATE_CHAT_REQUESTED, createChat);
