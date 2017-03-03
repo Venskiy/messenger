@@ -6,7 +6,14 @@ import { connect } from 'react-redux';
 
 import Home from './routes/Home';
 import Chat from './routes/Chat';
-import { fetchUsers, addNewChat, fetchChats, updateChatLastMessage, readChatLastMessage } from './actions/homeActions';
+import {
+  fetchUsers,
+  addNewChat,
+  fetchChats,
+  updateChatLastMessage,
+  readChatLastMessage,
+  changeIsTypingState,
+} from './actions/homeActions';
 import { recieveChatMessage, readChatMessages } from './actions/chatActions';
 import type { FullState } from './reducers/mainReducer';
 import type { User, Message, Messages } from './types';
@@ -54,6 +61,9 @@ class Index extends Component {
           nextProps.onReadChatLastMessage(data.chat_id);
           nextProps.onReadChatMessages(data.chat_id);
           break;
+        case constants.IS_USER_TYPING:
+          nextProps.onInterlocutorTyping(data.chat_id);
+          break;
         case constants.DISPLAY_CHAT_ON_RECIPIENT_SIDE:
           nextProps.onAddNewChat(data.chat);
           break;
@@ -93,6 +103,7 @@ const mapDispatchToProps = {
   onUpdateChatLastMessage: updateChatLastMessage,
   onReadChatLastMessage: readChatLastMessage,
   onReadChatMessages: readChatMessages,
+  onInterlocutorTyping: changeIsTypingState,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index);

@@ -32,7 +32,7 @@ const ChatRow = ({ chat, onSelectChat }: ChatRowProps) => (
       </Left>
       <Body>
         <Text>{chat.interlocutor_username}</Text>
-        <Text note>{chat.last_message}</Text>
+        {chat.is_interlocutor_typing ? <Text>{chat.interlocutor_username} is typing</Text> : <Text note>{chat.last_message}</Text>}
       </Body>
       <Right>
         <Text note>{getMessageTimestamp(new Date(chat.last_message_timestamp))}</Text>

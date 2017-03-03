@@ -13,6 +13,7 @@ type PutChats = { type: 'PUT_CHATS', chats: Array<ChatType> };
 type SetChatsFetchFailedErrorMessage = { type: 'SET_CHATS_FETCH_FAILED_ERROR_MESSAGE', errorMessage: string | Object };
 type UpdateChatLastMessage = { type: 'UPDATE_CHAT_LAST_MESSAGE', chatId: number | string, senderId: number | string, message: Message };
 type ReadChatLastMessage = { type: 'READ_CHAT_LAST_MESSAGE', chatId: number | string };
+type ChangeIsTypingState = { type: 'CHANGE_IS_TYPING_STATE', chatId: number | string };
 
 // export type HomeAction = PutUsers | SetUsersFetchFailedErrorMessage |
 //  PutChats | SetChatsFetchFailedErrorMessage | UpdateChatLastMessage | any;
@@ -40,5 +41,9 @@ export const updateChatLastMessage = (chatId: number | string, senderId: number 
 });
 export const readChatLastMessage = (chatId: number | string): ReadChatLastMessage => ({
   type: types.READ_CHAT_LAST_MESSAGE,
+  chatId: chatId,
+});
+export const changeIsTypingState = (chatId: number | string): ChangeIsTypingState => ({
+  type: types.CHANGE_IS_TYPING_STATE,
   chatId: chatId,
 });
