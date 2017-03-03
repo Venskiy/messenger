@@ -30,7 +30,9 @@ const styles = StyleSheet.create({
 class ChatRoute extends Component {
   state: {
     ws: WebSocket,
-    text: string
+    text: string,
+    isTyping: boolean,
+    timeout: number,
   }
 
   props: {
@@ -49,6 +51,8 @@ class ChatRoute extends Component {
     this.state = {
       ws: new WebSocket(`${SOCKET_ROOT}tornado_chat/${props.chatId}/?user_token=${TOKEN}`),
       text: '',
+      isTyping: false,
+      timeout: 0,
     };
 
     props.onFetchMessagesEvent(props.chatId);
@@ -77,6 +81,28 @@ class ChatRoute extends Component {
     }
   }
 
+  handleChangeText(text) {
+    this.setState({ text });
+
+    clearTimeout(this.state.timeout);
+    if(!this.state.isTyping) {
+      this.setState({ isTyping: true });
+      this.state.ws.send(JSON.stringify({
+        type: constants.IS_USER_TYPING,
+        interlocutorId: this.props.chat.interlocutor_id,
+      }));
+    }
+    let _this = this;
+    const timeout =  setTimeout(function() {
+      _this.setState({ isTyping: false });
+      _this.state.ws.send(JSON.stringify({
+        type: constants.IS_USER_TYPING,
+        interlocutorId: _this.props.chat.interlocutor_id,
+      }));
+    }, 3000);
+    this.setState({ timeout: timeout });
+  }
+
   render() {
     const chatMessages = this.props.messages[this.props.chatId];
     return chatMessages ? (
@@ -87,7 +113,7 @@ class ChatRoute extends Component {
         />
         <Toolbar
           text={this.state.text}
-          onChangeText={(text) => this.setState({ text })}
+          onChangeText={this.handleChangeText.bind(this)}
           onSendMessage={this.sendMessage.bind(this)}
         />
         <KeyboardSpacer />
