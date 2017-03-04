@@ -6,6 +6,7 @@ import { waitForSocketConnection } from '../utils/utils';
 import * as types from '../actions/actionTypes';
 import {
   putAccessToken,
+  setAccessTokenFetchFailedErrorMessage,
   putAuthenticatedUser,
   setAuthenticatedUserFetchErrorMessage,
 } from '../actions/mainActions';
@@ -34,8 +35,12 @@ function* obtainAccessToken(action) {
 }
 
 function* fetchAccessToken(action) {
-  const accessToken = yield call(cookie.getAccessToken);
-  yield put(putAccessToken(accessToken));
+  try {
+    const accessToken = yield call(cookie.getAccessToken);
+    yield put(putAccessToken(accessToken));
+  } catch (e) {
+    yield put(setAccessTokenFetchFailedErrorMessage(e));
+  }
 }
 
 function* getAuthenticatedUser(action) {

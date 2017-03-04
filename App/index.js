@@ -33,6 +33,7 @@ class Index extends Component {
 
   props: {
     accessToken: string,
+    accessTokenFetchFailedErrorMessage: string,
     user: User,
     messages: Messages,
     onFetchChats: () => void,
@@ -90,6 +91,7 @@ class Index extends Component {
 
 const mapStateToProps = (state) => ({
   accessToken: state.main.accessToken,
+  accessTokenFetchFailedErrorMessage: state.main.accessTokenFetchFailedErrorMessage,
   user: state.main.authenticatedUser,
   messages: state.chat.messages,
 });

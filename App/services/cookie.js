@@ -23,10 +23,7 @@ export const setAccessToken = (accessToken) => {
 export const getAccessToken = () => {
   return new Promise((resolve, reject) => {
     CookieManager.getAll((err, res) => {
-      if (res.accessToken) {
-        resolve(res.accessToken.value);
-      }
-      resolve('pow');
+      res.accessToken ? resolve(res.accessToken.value) : reject('There is not access token.');
     });
   });
 };
