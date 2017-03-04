@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, NavigatorIOS } from 'react-native';
 import { connect } from 'react-redux';
 
+import Loading from './components/Loading';
 import { accessTokenFetchRequested } from './actions/mainActions';
 import {
   fetchUsers,
@@ -77,15 +78,29 @@ class Index extends Component {
   }
 
   render() {
-    const initialRoute = this.props.accessToken ? routes.getHomeRoute() : routes.getLoginRoute();
-    return (
-      <NavigatorIOS
-        navigationBarHidden={false}
-        style={styles.container}
-        tintColor='#FF6600'
-        initialRoute={initialRoute}
-      />
-    );
+    if (this.props.accessToken) {
+      return (
+        <NavigatorIOS
+          navigationBarHidden={false}
+          style={styles.container}
+          tintColor='#FF6600'
+          initialRoute={routes.getHomeRoute()}
+        />
+      );
+    } else {
+      if (this.props.accessTokenFetchFailedErrorMessage) {
+        return (
+          <NavigatorIOS
+            navigationBarHidden={false}
+            style={styles.container}
+            tintColor='#FF6600'
+            initialRoute={routes.getLoginRoute()}
+          />
+        );
+      } else {
+        return <Loading />
+      }
+    }
   }
 }
 
