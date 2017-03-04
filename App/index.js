@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, NavigatorIOS } from 'react-native';
 import { connect } from 'react-redux';
-import CookieManager from 'react-native-cookies';
 
 import { accessTokenFetchRequested } from './actions/mainActions';
 import {
@@ -77,11 +76,7 @@ class Index extends Component {
   }
 
   render() {
-    let initialRoute = routes.getLoginRoute();
-    CookieManager.getAll((err, res) => {
-      initialRoute = routes.getHomeRoute();
-    });
-    console.log(this.props.accessToken);
+    const initialRoute = this.props.accessToken ? routes.getHomeRoute() : routes.getLoginRoute();
     return (
       <NavigatorIOS
         navigationBarHidden={false}

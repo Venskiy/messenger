@@ -19,6 +19,11 @@ import {
 import { putChatMessages, setMessagesFetchFailedErrorMessage } from '../actions/chatActions';
 import * as constants from '../utils/constants';
 
+function* obtainAccessToken(action) {
+  const accessToken = yield call(api.obtainAccessToken, action.username, action.password);
+  console.log(accessToken);
+}
+
 function* fetchAccessToken(action) {
   const accessToken = yield call(cookie.getAccessToken);
   yield put(putAccessToken(accessToken));
@@ -86,6 +91,7 @@ function* fetchMessages(action) {
 }
 
 function* mySaga() {
+  yield takeLatest(types.OBTAIN_ACCESS_TOKEN, obtainAccessToken)
   yield takeLatest(types.ACCESS_TOKEN_FETCH_REQUESTED, fetchAccessToken);
   yield takeLatest(types.GET_AUTHENTICATED_USER, getAuthenticatedUser);
   yield takeLatest(types.USERS_FETCH_REQUESTED, fetchUsers);

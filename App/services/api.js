@@ -1,5 +1,25 @@
 import { TOKEN, API_ROOT } from '../config/settings';
 
+export const obtainAccessToken = (username, password) => {
+  return new Promise((resolve, reject) => {
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+    headers.append('Content-Type', 'application/json');
+
+    fetch(`${API_ROOT}api-token-auth/`, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        username: username,
+        password: password,
+      })
+    })
+    .then(response => {
+      response.json().then(response => resolve(response));
+    });
+  });
+};
+
 export const getAuthenticatedUser = () => {
   return new Promise((resolve, reject) => {
     let headers = new Headers();

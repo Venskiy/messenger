@@ -8,6 +8,9 @@ import {
   TextInput
 } from 'react-native';
 import CookieManager from 'react-native-cookies';
+import { connect } from 'react-redux';
+
+import { obtainAccessToken } from '../../actions/mainActions';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,13 +34,17 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class Login extends Component {
+class LoginRoute extends Component {
   constructor(props) {
     super(props)
     this.state = {
       username: '',
       password: ''
     }
+  }
+
+  handleSubmit() {
+    this.props.onObtainAccessToken(this.state.username, this.state.password);
   }
 
   render() {
@@ -54,10 +61,20 @@ export default class Login extends Component {
           value={this.state.password}
           secureTextEntry={true}
           onChangeText={(text) => { this.setState({ password: text }) }}/>
-        <TouchableHighlight style={styles.button}>
+        <TouchableHighlight style={styles.button} onPress={this.handleSubmit.bind(this)}>
             <Text>Submit</Text>
         </TouchableHighlight>
       </View>
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  accessToken: state.main.accessToken,
+});
+
+const mapDispatchToProps = {
+  onObtainAccessToken: obtainAccessToken,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginRoute);
