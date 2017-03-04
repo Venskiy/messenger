@@ -32,7 +32,7 @@ class ChatRoute extends Component {
     ws: WebSocket,
     text: string,
     isTyping: boolean,
-    timeout: number,
+    timeout?: number,
   }
 
   props: {
@@ -52,7 +52,6 @@ class ChatRoute extends Component {
       ws: new WebSocket(`${SOCKET_ROOT}tornado_chat/${props.chatId}/?user_token=${TOKEN}`),
       text: '',
       isTyping: false,
-      timeout: 0,
     };
 
     props.onFetchMessagesEvent(props.chatId);

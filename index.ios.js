@@ -16,7 +16,6 @@ import App from './App';
 import { homeReducer } from './App/reducers/homeReducer';
 import { chatReducer } from './App/reducers/chatReducer';
 import { mainReducer } from './App/reducers/mainReducer';
-import { getAuthenticatedUser } from './App/actions/mainActions';
 import mySaga from './App/sagas';
 
 const sagaMiddleware = createSagaMiddleware()
@@ -28,7 +27,6 @@ sagaMiddleware.run(mySaga);
 class Index extends Component {
   constructor(props) {
     super(props)
-    store.dispatch(getAuthenticatedUser());
   }
 
   render() {

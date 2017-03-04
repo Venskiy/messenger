@@ -9,6 +9,7 @@ import UsersList from './UsersList';
 import ChatsList from './ChatsList';
 import FooterTabs from './FooterTabs';
 import { getSortedChats } from '../../config/selectors';
+import { getAuthenticatedUser } from '../../actions/mainActions';
 import { fetchUsers, createChat, fetchChats } from '../../actions/homeActions';
 import type { User, ChatType } from '../../types';
 
@@ -28,7 +29,9 @@ class HomeRoute extends Component {
 
   constructor(props) {
     super(props)
-
+    props.onGetAuthenticatedUser();
+    props.onFetchUsers();
+    props.onFetchChats();
     this.state = {
       activeTab: 'chats',
     };
@@ -59,6 +62,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
+  onGetAuthenticatedUser: getAuthenticatedUser,
+  onFetchUsers: fetchUsers,
+  onFetchChats: fetchChats,
   onCreateChat: createChat,
   onFetchChatsButtonPressed: fetchChats,
 }

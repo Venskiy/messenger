@@ -7,9 +7,7 @@ import { connect } from 'react-redux';
 import Loading from './components/Loading';
 import { accessTokenFetchRequested } from './actions/mainActions';
 import {
-  fetchUsers,
   addNewChat,
-  fetchChats,
   updateChatLastMessage,
   readChatLastMessage,
   changeIsTypingState,
@@ -29,7 +27,7 @@ const styles = StyleSheet.create({
 
 class Index extends Component {
   state: {
-    ws: WebSocket
+    ws: any,
   }
 
   props: {
@@ -38,43 +36,48 @@ class Index extends Component {
     user: User,
     messages: Messages,
     onFetchChats: () => void,
-    onRecieveChatMessage: (chatId: number | string, message: Message) => void
+    onRecieveChatMessage: (chatId: number | string, message: Message) => void,
   }
 
   constructor(props) {
-    super(props)
-    this.state = {
-      ws: new WebSocket(`${SOCKET_ROOT}chat_app/${props.user.id}/?user_token=${TOKEN}`)
-    };
+    super(props);
     props.onFetchAccessToken();
-    props.onFetchUsers();
-    props.onFetchChats();
+    this.state = {
+      ws: null,
+    }
   }
 
   componentWillUpdate(nextProps: any) {
-    this.state.ws.onmessage = function(e: any) {
-      const data = JSON.parse(e.data);
-      switch (data.type) {
-        case constants.SEND_MESSAGE:
-          if(nextProps.messages[data.chat_id]) {
-            nextProps.onRecieveChatMessage(data.chat_id, data.message);
-          }
-          nextProps.onUpdateChatLastMessage(data.chat_id, data.sender_id, data.message);
-          break;
-        case constants.READ_MESSAGE:
-          nextProps.onReadChatLastMessage(data.chat_id);
-          nextProps.onReadChatMessages(data.chat_id);
-          break;
-        case constants.IS_USER_TYPING:
-          nextProps.onInterlocutorTyping(data.chat_id);
-          break;
-        case constants.DISPLAY_CHAT_ON_RECIPIENT_SIDE:
-          nextProps.onAddNewChat(data.chat);
-          break;
-        default:
-          break;
+    if (nextProps.user && nextProps.accessToken) {
+      if (!this.state.ws) {
+        this.state = {
+          ws: new WebSocket(`${SOCKET_ROOT}chat_app/${nextProps.user.id}/?user_token=${TOKEN}`) ,
+        };
       }
-    };
+      this.state.ws.onmessage = function(e: any) {
+        const data = JSON.parse(e.data);
+        switch (data.type) {
+          case constants.SEND_MESSAGE:
+            if(nextProps.messages[data.chat_id]) {
+              nextProps.onRecieveChatMessage(data.chat_id, data.message);
+            }
+            nextProps.onUpdateChatLastMessage(data.chat_id, data.sender_id, data.message);
+            break;
+          case constants.READ_MESSAGE:
+            nextProps.onReadChatLastMessage(data.chat_id);
+            nextProps.onReadChatMessages(data.chat_id);
+            break;
+          case constants.IS_USER_TYPING:
+            nextProps.onInterlocutorTyping(data.chat_id);
+            break;
+          case constants.DISPLAY_CHAT_ON_RECIPIENT_SIDE:
+            nextProps.onAddNewChat(data.chat);
+            break;
+          default:
+            break;
+        }
+      };
+    }
   }
 
   render() {
@@ -113,9 +116,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   onFetchAccessToken: accessTokenFetchRequested,
-  onFetchUsers: fetchUsers,
   onAddNewChat: addNewChat,
-  onFetchChats: fetchChats,
   onRecieveChatMessage: recieveChatMessage,
   onUpdateChatLastMessage: updateChatLastMessage,
   onReadChatLastMessage: readChatLastMessage,
