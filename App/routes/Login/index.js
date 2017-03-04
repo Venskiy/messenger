@@ -11,6 +11,7 @@ import CookieManager from 'react-native-cookies';
 import { connect } from 'react-redux';
 
 import { obtainAccessToken } from '../../actions/mainActions';
+import routes from '../../config/routes';
 
 const styles = StyleSheet.create({
   container: {
@@ -41,6 +42,10 @@ class LoginRoute extends Component {
       username: '',
       password: ''
     }
+  }
+
+  componentWillUpdate(nextProps) {
+    nextProps.accessToken ? nextProps.navigator.replace(routes.getHomeRoute()) : null;
   }
 
   handleSubmit() {

@@ -20,8 +20,17 @@ import { putChatMessages, setMessagesFetchFailedErrorMessage } from '../actions/
 import * as constants from '../utils/constants';
 
 function* obtainAccessToken(action) {
-  const accessToken = yield call(api.obtainAccessToken, action.username, action.password);
-  const response = yield call(cookie.setAccessToken, accessToken);
+  try {
+    const accessToken = yield call(api.obtainAccessToken, action.username, action.password);
+    try {
+      const response = yield call(cookie.setAccessToken, accessToken);
+      yield put(putAccessToken(accessToken));
+    } catch (e) {
+      console.log(e);
+    }
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 function* fetchAccessToken(action) {
