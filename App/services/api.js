@@ -15,7 +15,7 @@ export const obtainAccessToken = (username, password) => {
       })
     })
     .then(response => {
-      response.json().then(response => resolve(response));
+      response.json().then(response => resolve(response.token));
     });
   });
 };

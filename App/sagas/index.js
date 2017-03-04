@@ -21,7 +21,7 @@ import * as constants from '../utils/constants';
 
 function* obtainAccessToken(action) {
   const accessToken = yield call(api.obtainAccessToken, action.username, action.password);
-  console.log(accessToken);
+  const response = yield call(cookie.setAccessToken, accessToken);
 }
 
 function* fetchAccessToken(action) {
